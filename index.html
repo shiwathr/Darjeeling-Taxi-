@@ -109,24 +109,14 @@
     
     <!-- Sidebar Menu Content -->
     <aside id="sidebar-menu" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-[70] shadow-2xl flex flex-col text-left">
-        <div class="p-8 border-b border-gray-100 flex flex-col gap-4">
-            <div class="flex items-center justify-between w-full">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="taxi" class="text-yellow-brand w-6 h-6"></i>
-                    <span class="font-bold text-lg tracking-tight">Darjeelingtaxi</span>
-                </div>
-                <button onclick="toggleMenu()" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-slate-400 tap-scale">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+        <div class="p-8 border-b border-gray-100 flex items-center justify-between w-full">
+            <div class="flex items-center gap-2">
+                <i data-lucide="taxi" class="text-yellow-brand w-6 h-6"></i>
+                <span class="font-bold text-lg tracking-tight">Darjeelingtaxi</span>
             </div>
-            <!-- User Status in Sidebar -->
-            <div id="user-sidebar-info" class="flex items-center gap-3 mt-4 p-3 bg-slate-50 rounded-2xl hidden">
-                <img id="user-sidebar-img" src="" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
-                <div class="overflow-hidden">
-                    <p id="user-sidebar-name" class="text-sm font-bold truncate">User</p>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">Member</p>
-                </div>
-            </div>
+            <button onclick="toggleMenu()" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-slate-400 tap-scale">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
         </div>
         
         <nav class="flex-1 p-6 space-y-1">
@@ -139,8 +129,8 @@
             <button onclick="switchPage('pickup'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
                 <i data-lucide="plane-takeoff" class="w-4 h-4 group-hover:text-yellow-600"></i> Pickup & Drop
             </button>
-            <button onclick="switchPage('profile'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
-                <i data-lucide="user-circle" class="w-4 h-4 group-hover:text-yellow-600"></i> My Profile
+            <button onclick="switchPage('hyperlocal'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
+                <i data-lucide="map-pin" class="w-4 h-4 group-hover:text-yellow-600"></i> Hyperlocal
             </button>
             <div class="h-px bg-gray-100 my-4"></div>
             <button onclick="switchPage('help'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 font-bold text-slate-500 transition-colors group text-sm text-left">
@@ -148,7 +138,7 @@
             </button>
         </nav>
         
-        <div class="p-8 border-t border-gray-100 text-left">
+        <div class="p-8 border-t border-gray-100">
             <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-4">Official Dispatch</p>
             <a href="tel:918207219672" class="flex items-center gap-3 text-sm font-bold text-slate-900">
                 <div class="w-8 h-8 bg-yellow-brand rounded-full flex items-center justify-center text-black">
@@ -159,17 +149,17 @@
         </div>
     </aside>
 
-    <!-- Toast Notification Widget -->
+    <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-24 left-1/2 z-[100] w-[90%] max-w-sm bg-slate-900 text-white p-4 rounded-2xl flex items-center gap-3 shadow-2xl text-left">
         <div id="toast-icon" class="w-10 h-10 rounded-full bg-yellow-brand flex items-center justify-center text-black">
             <i data-lucide="info" class="w-5 h-5"></i>
         </div>
         <div class="flex-1 text-left">
-            <p id="toast-message" class="text-sm font-bold">Booking Updated!</p>
+            <p id="toast-message" class="text-sm font-bold">Updated!</p>
         </div>
     </div>
 
-    <!-- Navigation Header -->
+    <!-- Header -->
     <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-gray-100">
         <div class="flex items-center gap-4">
             <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors tap-scale text-left">
@@ -177,12 +167,12 @@
             </button>
             <h1 class="font-bold text-lg tracking-tight text-slate-900 text-left">Darjeelingtaxi service</h1>
         </div>
-        <button onclick="switchPage('profile')" id="header-profile-btn" class="w-11 h-11 bg-slate-100 rounded-full overflow-hidden border-2 border-white shadow-sm tap-scale transition-transform">
-            <i data-lucide="user" class="w-5 h-5 m-auto text-slate-400"></i>
-        </button>
+        <a href="tel:918207219672" class="w-11 h-11 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg shadow-yellow-400/30 tap-scale transition-transform text-left">
+            <i data-lucide="phone" class="w-5 h-5 fill-current"></i>
+        </a>
     </nav>
 
-    <!-- Main Content Area -->
+    <!-- Main Viewport -->
     <main class="max-w-md mx-auto relative overflow-hidden text-left">
         
         <!-- HOME PAGE -->
@@ -194,30 +184,30 @@
                         <i data-lucide="sparkles" class="w-3 h-3 text-left"></i> Safe. Reliable. Everywhere.
                     </div>
                     <h2 class="text-white text-3xl font-extrabold leading-tight tracking-tight text-left">Premium Hill<br/><span class="text-yellow-brand text-4xl text-left">Transfers.</span></h2>
-                    <button onclick="scrollToBooking()" class="mt-6 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl tap-scale transition-all text-left text-left">Book Now</button>
+                    <button onclick="scrollToBooking()" class="mt-6 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl tap-scale transition-all text-left">Book Now</button>
                 </div>
             </div>
 
             <!-- Quick Menu -->
-            <section class="mt-8 text-left text-left">
+            <section class="mt-8 text-left">
                 <div class="grid grid-cols-3 gap-3 text-center">
                     <div onclick="scrollToBooking()" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer">
-                        <div class="w-12 h-12 bg-yellow-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-yellow-brand transition-colors text-yellow-600 text-center text-center">
+                        <div class="w-12 h-12 bg-yellow-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-yellow-brand transition-colors text-yellow-600 text-center">
                             <i data-lucide="car" class="w-6 h-6 group-hover:text-black"></i>
                         </div>
                         <span class="text-[9px] font-black text-slate-500 uppercase">Local</span>
                     </div>
-                    <div onclick="switchPage('pickup')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-blue-600 text-center text-center">
+                    <div onclick="switchPage('pickup')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-blue-600 text-center">
                         <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-blue-500 transition-colors">
                             <i data-lucide="plane" class="w-6 h-6 group-hover:text-white"></i>
                         </div>
                         <span class="text-[9px] font-black text-slate-500 uppercase">Transfers</span>
                     </div>
-                    <div onclick="switchPage('hyperlocal')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-green-600 text-center text-center">
-                        <div class="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-500 transition-colors text-center text-center">
-                            <i data-lucide="zap" class="w-6 h-6 group-hover:text-white text-center text-center"></i>
+                    <div onclick="switchPage('hyperlocal')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-green-600 text-center">
+                        <div class="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-500 transition-colors">
+                            <i data-lucide="zap" class="w-6 h-6 group-hover:text-white"></i>
                         </div>
-                        <span class="text-[9px] font-black text-slate-500 uppercase text-center text-center text-center text-center text-center">Hyperlocal</span>
+                        <span class="text-[9px] font-black text-slate-500 uppercase text-center">Hyperlocal</span>
                     </div>
                 </div>
             </section>
@@ -226,29 +216,29 @@
             <section id="booking-section" class="mt-10 pb-10">
                 <div class="bg-white rounded-[3rem] p-8 card-shadow border border-gray-100">
                     <h3 class="font-bold text-xl text-slate-900 tracking-tight text-left mb-8">Ride Details</h3>
-                    <div class="space-y-5 text-left text-left">
+                    <div class="space-y-5 text-left">
                         <div class="relative group">
-                            <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 text-left text-left"></i>
-                            <input type="text" id="cust-name" placeholder="Full Name" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] font-semibold text-sm outline-none text-left text-left">
+                            <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 text-left"></i>
+                            <input type="text" id="cust-name" placeholder="Full Name" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left">
                         </div>
-                        <div class="relative group">
-                            <i data-lucide="users" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 text-left text-left"></i>
-                            <input type="number" id="num-pax" placeholder="No. of Persons" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] font-semibold text-sm outline-none text-left text-left" min="1">
+                        <div class="relative group text-left">
+                            <i data-lucide="users" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 text-left"></i>
+                            <input type="number" id="num-pax" placeholder="No. of Persons" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left" min="1">
                         </div>
-                        <div class="relative group text-left text-left">
-                            <i data-lucide="map-pin" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500 text-left text-left"></i>
-                            <input type="text" id="pickup-loc" placeholder="Pickup Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] font-semibold text-sm outline-none text-left text-left">
+                        <div class="relative group text-left">
+                            <i data-lucide="map-pin" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500 text-left"></i>
+                            <input type="text" id="pickup-loc" placeholder="Pickup Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left">
                         </div>
-                        <div class="relative group text-left text-left text-left">
-                            <i data-lucide="navigation" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500 text-left text-left text-left"></i>
-                            <input type="text" id="drop-loc" placeholder="Drop Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] font-semibold text-sm outline-none text-left text-left text-left">
+                        <div class="relative group text-left">
+                            <i data-lucide="navigation" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500 text-left"></i>
+                            <input type="text" id="drop-loc" placeholder="Drop Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
-                            <input type="date" id="ride-date" class="form-input w-full px-5 py-5 rounded-[1.5rem] font-bold text-xs text-left text-left text-left">
-                            <input type="time" id="ride-time" class="form-input w-full px-5 py-5 rounded-[1.5rem] font-bold text-xs text-left text-left text-left">
+                            <input type="date" id="ride-date" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold text-left">
+                            <input type="time" id="ride-time" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold text-left">
                         </div>
-                        <button onclick="submitToWhatsApp()" class="w-full bg-yellow-brand text-black py-5 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 shadow-2xl mt-4 text-center text-center text-center">
-                            <i data-lucide="message-circle" class="w-6 h-6 fill-green-500 text-green-500 text-left text-left text-left"></i>
+                        <button onclick="submitToWhatsApp()" class="group w-full bg-yellow-brand text-black py-5 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 shadow-2xl mt-4 text-center">
+                            <i data-lucide="message-circle" class="w-6 h-6 fill-green-500 text-green-500 text-left"></i>
                             Book via WhatsApp
                         </button>
                     </div>
@@ -256,59 +246,44 @@
             </section>
         </div>
 
-        <!-- PROFILE PAGE -->
-        <div id="page-profile" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-8 text-left text-left">My Profile</h2>
-            <div id="profile-logged-out" class="space-y-6">
-                <div class="bg-white p-10 rounded-[3rem] card-shadow border border-gray-100 text-center text-center text-center">
-                    <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
-                        <i data-lucide="user" class="w-10 h-10"></i>
-                    </div>
-                    <h3 class="font-bold text-xl text-slate-900 mb-2 text-center text-center">Welcome Guest</h3>
-                    <p class="text-sm text-slate-400 mb-8 text-center text-center">Sign in to manage your bookings and get ride updates.</p>
-                    <button onclick="loginWithGoogle()" class="w-full bg-white border-2 border-slate-100 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 tap-scale transition-all hover:bg-slate-50 text-center text-center text-center text-center text-center">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                        Sign in with Google
-                    </button>
-                </div>
-            </div>
-            <div id="profile-logged-in" class="page-hidden space-y-4">
-                <div class="bg-white p-8 rounded-[3rem] card-shadow border border-gray-100 flex items-center gap-6">
-                    <img id="profile-img" src="" class="w-20 h-20 rounded-full border-4 border-yellow-brand shadow-md">
-                    <div class="text-left text-left text-left">
-                        <h3 id="profile-name" class="font-bold text-xl text-slate-900 leading-tight">Name</h3>
-                        <p id="profile-email" class="text-xs text-slate-400 font-medium truncate w-40 text-left text-left">email@example.com</p>
-                    </div>
-                </div>
-                <button onclick="logout()" class="w-full bg-slate-50 text-slate-400 py-5 rounded-2xl font-bold flex items-center justify-center gap-3 tap-scale mt-8 text-center text-center text-center">
-                    <i data-lucide="log-out" class="w-5 h-5 text-slate-300"></i>
-                    Sign Out
-                </button>
-            </div>
-        </div>
-
-        <!-- LIST CONTAINERS -->
+        <!-- SIGHTSEEING PAGE -->
         <div id="page-tours" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left">Sightseeing</h2>
-            <div id="sightseeing-container" class="grid grid-cols-1 gap-6 pb-20 text-left"></div>
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6">Sightseeing Routes</h2>
+            <div id="sightseeing-container" class="grid grid-cols-1 gap-6 pb-20"></div>
         </div>
 
+        <!-- TRANSFERS PAGE -->
         <div id="page-pickup" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left text-left">Transfers</h2>
-            <div id="transfers-container" class="grid grid-cols-2 gap-4 pb-20 text-left text-left"></div>
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6">Transfers</h2>
+            <div id="transfers-container" class="grid grid-cols-2 gap-4 pb-20 text-left"></div>
         </div>
 
+        <!-- HYPERLOCAL PAGE -->
         <div id="page-hyperlocal" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left text-left text-left">Hyperlocal</h2>
-            <div id="hyperlocal-container" class="space-y-4 pb-20 text-left text-left text-left"></div>
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left">Hyperlocal Runs</h2>
+            <div id="hyperlocal-container" class="space-y-4 pb-20 text-left"></div>
         </div>
 
+        <!-- HELP & SUPPORT PAGE -->
         <div id="page-help" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-8 text-left text-left text-left">Help & Support</h2>
-            <div class="space-y-4 pb-20 text-left text-left text-left text-left">
-                <a href="tel:918207219672" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale block">
-                    <div class="w-14 h-14 bg-yellow-brand rounded-2xl flex items-center justify-center text-black shadow-md text-black"><i data-lucide="phone-call" class="w-8 h-8 text-black"></i></div>
-                    <div class="text-left text-left text-left text-left text-left"><h3 class="font-bold text-slate-800 text-left text-left text-left">Direct Call</h3><p class="text-sm font-black text-slate-900 text-left text-left text-left text-left">+91 82072 19672</p></div>
+            <div class="flex justify-between items-center mb-8 px-2">
+                <div class="text-left text-left">
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight text-left">Help & Support</h2>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 text-left">24/7 Assistance</p>
+                </div>
+                <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center shadow-lg text-white">
+                    <i data-lucide="headphones" class="w-6 h-6 text-white"></i>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-left">
+                <a href="tel:918207219672" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group block text-left">
+                    <div class="w-14 h-14 bg-yellow-brand rounded-2xl flex items-center justify-center text-black shadow-md"><i data-lucide="phone-call" class="w-8 h-8 text-black"></i></div>
+                    <div class="text-left"><h3 class="font-bold text-slate-800 text-left">Direct Call</h3><p class="text-sm font-black text-slate-900 text-left">+91 82072 19672</p></div>
+                </a>
+                <a href="https://wa.me/918207219672" target="_blank" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group block text-left">
+                    <div class="w-14 h-14 bg-green-500 rounded-2xl flex items-center justify-center text-white shadow-md text-white"><i data-lucide="message-circle" class="w-8 h-8 text-white"></i></div>
+                    <div class="text-left"><h3 class="font-bold text-slate-800 text-left">WhatsApp Chat</h3><p class="text-xs font-bold text-slate-400 uppercase text-left">Instant Reply</p></div>
                 </a>
             </div>
         </div>
@@ -316,113 +291,20 @@
 
     <!-- Footer -->
     <footer class="bg-slate-950 text-slate-400 py-16 px-6 text-center border-t border-white/5 mt-12 text-left">
-        <div class="max-w-7xl mx-auto text-center text-center text-center text-center text-center text-center text-center text-center">
-            <div class="text-2xl font-bold font-serif text-white mb-2 uppercase tracking-tight text-center text-center text-center text-center text-center text-center">Darjeeling taxi service</div>
-            <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-8 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">Safe. Reliable. Everywhere.</p>
-            <p class="text-[9px] uppercase tracking-[0.2em] text-slate-700 font-bold text-center text-center text-center text-center text-center text-center text-center text-center text-center">© 2026 DARJEELINGTAXI SERVICE.</p>
+        <div class="max-w-7xl mx-auto text-center text-center text-center">
+            <div class="text-2xl font-bold font-serif text-white mb-2 uppercase tracking-tight text-center text-center">Darjeeling taxi service</div>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-8 text-center text-center text-center">Safe. Reliable. Everywhere.</p>
+            <p class="text-[9px] uppercase tracking-[0.2em] text-slate-700 font-bold text-center text-center text-center">© 2026 DARJEELINGTAXI SERVICE.</p>
         </div>
     </footer>
 
     <!-- Tab Bar -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-gray-100 px-4 py-4 flex justify-between items-center lg:hidden z-50 text-center text-center text-center text-center text-center text-center text-center text-center">
-        <button onclick="switchPage('home')" id="nav-home" class="flex-1 flex flex-col items-center text-yellow-brand tap-scale"><i data-lucide="home" class="w-5 h-5 text-center text-center text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center">Home</span></button>
-        <button onclick="switchPage('tours')" id="nav-tours" class="flex-1 flex flex-col items-center text-slate-300 tap-scale"><i data-lucide="map" class="w-5 h-5 text-center text-center text-center text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center text-center">Tours</span></button>
-        <button onclick="switchPage('pickup')" id="nav-pickup" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center text-center text-center text-center text-center text-center text-center"><i data-lucide="plane-takeoff" class="w-5 h-5 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center text-center text-center text-center">Pickup</span></button>
-        <button onclick="switchPage('profile')" id="nav-profile" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><i data-lucide="user-circle" class="w-5 h-5"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center text-center text-center">Profile</span></button>
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-gray-100 px-4 py-4 flex justify-between items-center lg:hidden z-50 text-center text-center">
+        <button onclick="switchPage('home')" id="nav-home" class="flex-1 flex flex-col items-center text-yellow-brand tap-scale text-center text-center"><i data-lucide="home" class="w-5 h-5 text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Home</span></button>
+        <button onclick="switchPage('tours')" id="nav-tours" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center"><i data-lucide="map" class="w-5 h-5 text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Tours</span></button>
+        <button onclick="switchPage('pickup')" id="nav-pickup" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center"><i data-lucide="plane-takeoff" class="w-5 h-5 text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Pickup</span></button>
+        <button onclick="switchPage('help')" id="nav-help" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center"><i data-lucide="help-circle" class="w-5 h-5 text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Help</span></button>
     </div>
-
-    <!-- Firebase SDK (Modular) -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-      import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-      import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-      import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyDDKclaBJ9FFIwbhksOZ7C3dHFnGSb_W8s",
-        authDomain: "darjeelingtaxi-web.firebaseapp.com",
-        projectId: "darjeelingtaxi-web",
-        storageBucket: "darjeelingtaxi-web.firebasestorage.app",
-        messagingSenderId: "914563709560",
-        appId: "1:914563709560:web:712c101d6e740987054b8d"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-      const messaging = getMessaging(app);
-      const provider = new GoogleAuthProvider();
-
-      // Messaging Setup & VAPID token save
-      const setupMessaging = async () => {
-        try {
-          const permission = await Notification.requestPermission();
-          if (permission === "granted") {
-            const token = await getToken(messaging, { vapidKey: "YOUR_VAPID_KEY_HERE" });
-            if (token) {
-              console.log("FCM TOKEN:", token);
-              // Rule 1: Strict Paths
-              await addDoc(collection(db, 'artifacts', 'darjeelingtaxi-web', 'public', 'data', 'users'), {
-                fcmToken: token,
-                updatedAt: serverTimestamp(),
-                userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
-              });
-            }
-          }
-        } catch (e) { console.error("Messaging Error:", e); }
-      };
-
-      onMessage(messaging, (payload) => {
-        alert(payload.notification.title + " - " + payload.notification.body);
-      });
-
-      // Global Access Functions
-      window.loginWithGoogle = () => {
-        signInWithPopup(auth, provider).catch(e => console.error(e));
-      };
-
-      window.logout = () => {
-        signOut(auth).catch(console.error);
-      };
-
-      window.saveBookingToFirebase = async (bookingData) => {
-        try {
-          // Rule 1: Strict Paths
-          await addDoc(collection(db, 'artifacts', 'darjeelingtaxi-web', 'public', 'data', 'bookings'), {
-            ...bookingData,
-            createdAt: serverTimestamp(),
-            userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
-          });
-        } catch (e) { console.error("Firestore Error:", e); }
-      };
-
-      // Auth Observer
-      onAuthStateChanged(auth, (user) => {
-        const outState = document.getElementById('profile-logged-out');
-        const inState = document.getElementById('profile-logged-in');
-        const sidebarInfo = document.getElementById('user-sidebar-info');
-        const headerBtn = document.getElementById('header-profile-btn');
-
-        if (user) {
-          outState.classList.add('page-hidden');
-          inState.classList.remove('page-hidden');
-          sidebarInfo.classList.remove('hidden');
-          document.getElementById('profile-img').src = user.photoURL;
-          document.getElementById('user-sidebar-img').src = user.photoURL;
-          document.getElementById('profile-name').innerText = user.displayName;
-          document.getElementById('user-sidebar-name').innerText = user.displayName;
-          document.getElementById('profile-email').innerText = user.email;
-          headerBtn.innerHTML = `<img src="${user.photoURL}" class="w-full h-full object-cover">`;
-          setupMessaging(); // Request permissions once logged in
-        } else {
-          outState.classList.remove('page-hidden');
-          inState.classList.add('page-hidden');
-          sidebarInfo.classList.add('hidden');
-          headerBtn.innerHTML = `<i data-lucide="user" class="w-5 h-5 m-auto text-slate-400"></i>`;
-          lucide.createIcons();
-        }
-      });
-    </script>
 
     <script>
         lucide.createIcons();
@@ -443,7 +325,7 @@
         }
 
         function switchPage(pageId) {
-            const pages = ['home', 'tours', 'pickup', 'hyperlocal', 'help', 'profile'];
+            const pages = ['home', 'tours', 'pickup', 'hyperlocal', 'help'];
             pages.forEach(p => {
                 const pageEl = document.getElementById(`page-${p}`);
                 const navEl = document.getElementById(`nav-${p}`);
@@ -472,7 +354,7 @@
             }, 500);
         }
 
-        async function submitToWhatsApp() {
+        function submitToWhatsApp() {
             const name = document.getElementById('cust-name').value;
             const pax = document.getElementById('num-pax').value;
             const pickup = document.getElementById('pickup-loc').value;
@@ -481,10 +363,6 @@
             const time = document.getElementById('ride-time').value;
 
             if (!name || !pickup || !drop) { showToast("Please fill all details!", "error"); return; }
-            
-            if (window.saveBookingToFirebase) {
-                await window.saveBookingToFirebase({ name, pax, pickup, drop, date, time });
-            }
 
             const msg = `*NEW TAXI BOOKING REQUEST*\n--------------------------\n👤 Name: ${name}\n👥 Persons: ${pax}\n📍 Pickup: ${pickup}\n🏁 Drop: ${drop}\n📅 Date: ${date}\n🕒 Time: ${time}\n--------------------------\nHello, I would like to book a ride. Please confirm rates.`;
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
@@ -509,10 +387,10 @@
                 { name: 'GANGTOK', icon: 'cloud' }, { name: 'JORETHANG', icon: 'milestone' }, { name: 'SITTONG', icon: 'home' }, { name: 'MANEBHANJYANG', icon: 'truck' }
             ];
             const locals = [
-                { name: 'Mall Road Run', dest: 'Mall Road', icon: 'map-pin' },
-                { name: 'Medical Help', dest: 'Hospital', icon: 'heart-pulse' },
-                { name: 'Grocery Store', dest: 'Bazaar', icon: 'shopping-cart' },
-                { name: 'Restaurant Drop', dest: 'Glenarys', icon: 'utensils' }
+                { name: 'Mall Road Run', dest: 'Mall Road', icon: 'map-pin', bg: 'bg-green-50', text: 'text-green-600' },
+                { name: 'Medical Help', dest: 'Hospital', icon: 'heart-pulse', bg: 'bg-red-50', text: 'text-red-600' },
+                { name: 'Grocery Store', dest: 'Market', icon: 'shopping-cart', bg: 'bg-emerald-50', text: 'text-emerald-600' },
+                { name: 'Restaurant Drop', dest: 'Cafe', icon: 'utensils', bg: 'bg-pink-50', text: 'text-pink-600' }
             ];
 
             document.getElementById('sightseeing-container').innerHTML = sightseeing.map(s => `
@@ -520,23 +398,23 @@
                     <img src="${s.img}" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
                     <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <div class="text-left"><span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-yellow-600 mb-1 inline-block text-left">${s.sub}</span><h3 class="text-white text-xl font-bold text-left">${s.name}</h3></div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg text-left"><i data-lucide="arrow-right" class="w-5 h-5 text-black"></i></div>
+                        <div class="text-left"><span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-yellow-600 mb-1 inline-block text-left text-left">${s.sub}</span><h3 class="text-white text-xl font-bold text-left text-left">${s.name}</h3></div>
+                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg text-left text-left"><i data-lucide="arrow-right" class="w-5 h-5 text-black"></i></div>
                     </div>
                 </div>
             `).join('');
 
             document.getElementById('transfers-container').innerHTML = transfers.map(t => `
                 <div onclick="bookService('${t.name}', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer text-blue-600">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600"><i data-lucide="${t.icon}" class="w-8 h-8 text-blue-600"></i></div>
+                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600 text-blue-600"><i data-lucide="${t.icon}" class="w-8 h-8 text-blue-600"></i></div>
                     <h3 class="font-bold text-sm text-slate-800 text-center">${t.name}</h3>
                 </div>
             `).join('');
 
             document.getElementById('hyperlocal-container').innerHTML = locals.map(l => `
                 <div onclick="bookService('${l.dest}', 'Current Location')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group cursor-pointer text-left text-left">
-                    <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 text-left"><i data-lucide="${l.icon}" class="w-8 h-8 text-green-600"></i></div>
-                    <div class="text-left text-left"><h3 class="font-bold text-slate-800 text-left text-left">${l.name}</h3><p class="text-[10px] text-slate-400 uppercase font-bold text-left">Quick Town Transfer</p></div>
+                    <div class="w-14 h-14 ${l.bg} rounded-2xl flex items-center justify-center ${l.text} text-left text-left text-left"><i data-lucide="${l.icon}" class="w-8 h-8"></i></div>
+                    <div class="text-left text-left"><h3 class="font-bold text-slate-800 text-left">${l.name}</h3><p class="text-[10px] text-slate-400 uppercase font-bold text-left">Town Transfer</p></div>
                 </div>
             `).join('');
             lucide.createIcons();
