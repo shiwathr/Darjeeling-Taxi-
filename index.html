@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- SEO Meta Tags -->
     <title>Darjeelingtaxi service | Safe, Reliable, Everywhere</title>
-    <meta name="description" content="Book your ride in seconds with Darjeelingtaxi service. Reliable airport transfers, outstation trips, and local sightseeing in Darjeeling and Sikkim.">
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -22,6 +19,7 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
+            text-align: left;
         }
         
         .bg-yellow-brand { background-color: #FFC801; }
@@ -31,8 +29,12 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
         }
 
-        .hero-gradient {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        /* Hero Background */
+        .hero-main-bg {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.8) 100%), 
+                        url('https://lh3.googleusercontent.com/d/1hVvJE_LnnqG4K5kTTLvUU7qm1i-UYoh3');
+            background-size: cover;
+            background-position: center;
         }
 
         .page-content {
@@ -80,14 +82,6 @@
             box-shadow: 0 0 0 4px rgba(255, 200, 1, 0.15);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) scaleX(-1); }
-            50% { transform: translateY(-12px) scaleX(-1); }
-        }
-        .floating-car {
-            animation: float 5s ease-in-out infinite;
-        }
-
         #toast {
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             transform: translateY(150%) translateX(-50%);
@@ -104,6 +98,8 @@
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(4px);
         }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-24 lg:pb-0 text-slate-800">
@@ -114,7 +110,7 @@
     <!-- Sidebar Menu Content -->
     <aside id="sidebar-menu" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-[70] shadow-2xl flex flex-col text-left">
         <div class="p-8 border-b border-gray-100 flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 text-left">
                 <i data-lucide="taxi" class="text-yellow-brand w-6 h-6"></i>
                 <span class="font-bold text-lg tracking-tight">Darjeelingtaxi</span>
             </div>
@@ -127,28 +123,22 @@
             <button onclick="switchPage('home'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
                 <i data-lucide="home" class="w-4 h-4 group-hover:text-yellow-600"></i> Home
             </button>
-            <button onclick="switchPage('tours'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
+            <button onclick="switchPage('tours'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left text-left">
                 <i data-lucide="map" class="w-4 h-4 group-hover:text-yellow-600"></i> Sightseeing
             </button>
-            <button onclick="switchPage('pickup'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
+            <button onclick="switchPage('pickup'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left text-left">
                 <i data-lucide="plane-takeoff" class="w-4 h-4 group-hover:text-yellow-600"></i> Pickup & Drop
             </button>
-            <button onclick="switchPage('rides'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
-                <i data-lucide="calendar-range" class="w-4 h-4 group-hover:text-yellow-600"></i> My Rides
+            <button onclick="switchPage('hyperlocal'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left text-left">
+                <i data-lucide="map-pin" class="w-4 h-4 group-hover:text-yellow-600"></i> Hyperlocal
             </button>
-            <button onclick="switchPage('profile'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
-                <i data-lucide="user-circle" class="w-4 h-4 group-hover:text-yellow-600"></i> My Profile
-            </button>
-            <div class="h-px bg-gray-100 my-4"></div>
-            <a href="https://darjeelinghost.blogspot.com/p/the-host_25.html" target="_blank" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 font-bold text-slate-500 transition-colors group text-sm">
-                <i data-lucide="info" class="w-4 h-4"></i> About Us
-            </a>
-            <a href="https://wa.me/918207219672" target="_blank" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 font-bold text-slate-500 transition-colors group text-sm">
+            <div class="h-px bg-gray-100 my-4 text-left"></div>
+            <button onclick="switchPage('help'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 font-bold text-slate-500 transition-colors group text-sm text-left">
                 <i data-lucide="help-circle" class="w-4 h-4"></i> Help & Support
-            </a>
+            </button>
         </nav>
         
-        <div class="p-8 border-t border-gray-100">
+        <div class="p-8 border-t border-gray-100 text-left text-left">
             <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-4">Official Dispatch</p>
             <a href="tel:918207219672" class="flex items-center gap-3 text-sm font-bold text-slate-900">
                 <div class="w-8 h-8 bg-yellow-brand rounded-full flex items-center justify-center text-black">
@@ -159,485 +149,382 @@
         </div>
     </aside>
 
-    <!-- Toast Widget -->
-    <div id="toast" class="fixed bottom-24 left-1/2 z-[100] w-[90%] max-w-sm bg-slate-900 text-white p-4 rounded-2xl flex items-center gap-3 shadow-2xl">
+    <!-- Toast Notification Widget -->
+    <div id="toast" class="fixed bottom-24 left-1/2 z-[100] w-[90%] max-w-sm bg-slate-900 text-white p-4 rounded-2xl flex items-center gap-3 shadow-2xl text-left">
         <div id="toast-icon" class="w-10 h-10 rounded-full bg-yellow-brand flex items-center justify-center text-black">
             <i data-lucide="info" class="w-5 h-5"></i>
         </div>
-        <div class="flex-1">
-            <p id="toast-message" class="text-sm font-bold">Booking updated!</p>
+        <div class="flex-1 text-left">
+            <p id="toast-message" class="text-sm font-bold">Booking Updated!</p>
         </div>
     </div>
 
-    <!-- Top Navigation -->
+    <!-- Navigation Header -->
     <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-gray-100">
         <div class="flex items-center gap-4">
-            <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors tap-scale" aria-label="Menu">
-                <i data-lucide="align-left" class="w-6 h-6"></i>
+            <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors tap-scale">
+                <i data-lucide="align-left" class="w-6 h-6 text-left"></i>
             </button>
-            <h1 class="font-bold text-lg tracking-tight text-slate-900">Darjeelingtaxi service</h1>
+            <h1 class="font-bold text-lg tracking-tight text-slate-900 text-left">Darjeelingtaxi service</h1>
         </div>
-        <div class="flex items-center gap-3">
-            <a href="tel:918207219672" class="w-11 h-11 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg shadow-yellow-400/30 hover:rotate-12 tap-scale transition-transform" aria-label="Call">
-                <i data-lucide="phone" class="w-5 h-5 fill-current"></i>
-            </a>
-        </div>
+        <a href="tel:918207219672" class="w-11 h-11 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg shadow-yellow-400/30 tap-scale transition-transform text-left">
+            <i data-lucide="phone" class="w-5 h-5 fill-current"></i>
+        </a>
     </nav>
 
-    <!-- Main Container -->
+    <!-- Main Content Area -->
     <main class="max-w-md mx-auto relative overflow-hidden">
         
         <!-- HOME PAGE -->
         <div id="page-home" class="page-active page-content px-4 pt-4">
-            <!-- Hero Card -->
-            <div class="relative h-64 rounded-[2.5rem] overflow-hidden hero-gradient p-8 flex flex-col justify-center shadow-2xl shadow-slate-200">
-                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                
-                <!-- Main Car Image with Fallback -->
-                <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600" 
-                     class="absolute -right-20 bottom-4 w-80 md:w-96 floating-car pointer-events-none drop-shadow-[0_25px_35px_rgba(0,0,0,0.6)] mix-blend-screen" 
-                     alt="Taxi"
-                     onerror="this.style.display='none'">
-                
-                <div class="relative z-10 max-w-[65%] text-left">
-                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-yellow-brand uppercase tracking-tighter mb-4">
-                        <i data-lucide="sparkles" class="w-3 h-3"></i> Premium Hill Transfers
+            <div class="relative h-64 rounded-[2.5rem] overflow-hidden hero-main-bg p-8 flex flex-col justify-center shadow-2xl shadow-slate-200 text-left">
+                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] text-left text-left"></div>
+                <div class="relative z-10 max-w-[85%] text-left">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-yellow-brand uppercase tracking-tighter mb-4 text-left">
+                        <i data-lucide="sparkles" class="w-3 h-3 text-left"></i> Safe. Reliable. Everywhere.
                     </div>
-                    <h2 class="text-white text-3xl font-extrabold leading-tight tracking-tight">Safe. Reliable.<br/><span class="text-yellow-brand">Everywhere.</span></h2>
-                    <p class="text-white/60 text-[10px] font-bold mt-2 mb-6 uppercase tracking-[0.2em]">Book your ride in seconds</p>
-                    <button onclick="scrollToBooking()" class="group inline-flex items-center gap-2 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl shadow-yellow-400/20 hover:shadow-yellow-400/40 tap-scale transition-all">
-                        Book Now <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                    </button>
+                    <h2 class="text-white text-3xl font-extrabold leading-tight tracking-tight text-left text-left">Premium Hill<br/><span class="text-yellow-brand text-4xl text-left">Transfers.</span></h2>
+                    <button onclick="scrollToBooking()" class="mt-6 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl tap-scale transition-all text-left">Book Now</button>
                 </div>
             </div>
 
-            <!-- Service Grid -->
-            <section class="mt-8">
-                <div class="flex justify-between items-end mb-5 px-2">
-                    <h3 class="font-bold text-xl text-slate-900 tracking-tight">Our Services</h3>
-                    <button onclick="switchPage('tours')" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-yellow-600 transition-colors">Explore Tours</button>
-                </div>
-                <div class="grid grid-cols-4 gap-3">
+            <!-- Quick Links -->
+            <section class="mt-8 text-left text-left">
+                <div class="grid grid-cols-3 gap-3 text-center">
                     <div onclick="scrollToBooking()" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer">
-                        <div class="w-12 h-12 bg-yellow-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-yellow-brand transition-colors">
-                            <i data-lucide="car" class="w-6 h-6 text-yellow-600 group-hover:text-black"></i>
+                        <div class="w-12 h-12 bg-yellow-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-yellow-brand transition-colors text-yellow-600 text-center">
+                            <i data-lucide="car" class="w-6 h-6 group-hover:text-black"></i>
                         </div>
-                        <span class="text-[9px] font-black text-slate-500 uppercase text-center">Local</span>
+                        <span class="text-[9px] font-black text-slate-500 uppercase">Local</span>
                     </div>
-                    <div onclick="switchPage('pickup')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer">
+                    <div onclick="switchPage('pickup')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-blue-600 text-center">
                         <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-blue-500 transition-colors">
-                            <i data-lucide="plane" class="w-6 h-6 text-blue-600 group-hover:text-white"></i>
+                            <i data-lucide="plane" class="w-6 h-6 group-hover:text-white"></i>
                         </div>
-                        <span class="text-[9px] font-black text-slate-500 uppercase text-center">Airport</span>
+                        <span class="text-[9px] font-black text-slate-500 uppercase text-center">Transfers</span>
                     </div>
-                    <div onclick="switchPage('pickup')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer">
+                    <div onclick="switchPage('hyperlocal')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-green-600 text-center text-center">
                         <div class="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-500 transition-colors">
-                            <i data-lucide="map" class="w-6 h-6 text-green-600 group-hover:text-white"></i>
+                            <i data-lucide="zap" class="w-6 h-6 group-hover:text-white"></i>
                         </div>
-                        <span class="text-[9px] font-black text-slate-500 uppercase text-center">Transfer</span>
-                    </div>
-                    <div onclick="switchPage('tours')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer">
-                        <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-purple-500 transition-colors">
-                            <i data-lucide="camera" class="w-6 h-6 text-purple-600 group-hover:text-white"></i>
-                        </div>
-                        <span class="text-[9px] font-black text-slate-500 uppercase text-center">Tours</span>
+                        <span class="text-[9px] font-black text-slate-500 uppercase text-center">Hyperlocal</span>
                     </div>
                 </div>
             </section>
 
-            <!-- Booking Form -->
-            <section id="booking-section" class="mt-8 pb-12">
-                <div class="bg-white rounded-[3rem] p-8 card-shadow border border-gray-100">
-                    <div class="flex items-center justify-between mb-8">
-                        <h3 class="font-bold text-xl text-slate-900 tracking-tight">Book Your Ride</h3>
-                        <div class="flex gap-1">
-                            <div id="step-1" class="w-6 h-1 rounded-full bg-yellow-brand"></div>
-                            <div id="step-2" class="w-6 h-1 rounded-full bg-gray-100 transition-colors"></div>
-                        </div>
+            <!-- WHY CHOOSE US -->
+            <section class="mt-10 px-2 text-left text-left text-left">
+                <h3 class="font-bold text-xl text-slate-900 tracking-tight mb-4 text-left">Why Book With Us?</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-5 rounded-3xl border border-gray-100 card-shadow text-left">
+                        <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-3"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                        <h4 class="font-bold text-sm text-slate-800 mb-1 text-left">Safety First</h4>
+                        <p class="text-[10px] text-slate-400 font-medium text-left">Verified local drivers for secure hill travel.</p>
                     </div>
-                    
+                    <div class="bg-white p-5 rounded-3xl border border-gray-100 card-shadow text-left">
+                        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 mb-3"><i data-lucide="clock" class="w-5 h-5"></i></div>
+                        <h4 class="font-bold text-sm text-slate-800 mb-1 text-left">On Time</h4>
+                        <p class="text-[10px] text-slate-400 font-medium text-left">Punctual pickups for airport & station runs.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Booking Section -->
+            <section id="booking-section" class="mt-10 pb-10">
+                <div class="bg-white rounded-[3rem] p-8 card-shadow border border-gray-100">
+                    <h3 class="font-bold text-xl text-slate-900 tracking-tight text-left mb-8">Ride Details</h3>
                     <div class="space-y-5 text-left">
                         <div class="relative group">
-                            <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 transition-colors"></i>
-                            <input type="text" id="cust-name" placeholder="Full Name" 
-                                   class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm">
+                            <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 text-left"></i>
+                            <input type="text" id="cust-name" placeholder="Full Name" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left">
                         </div>
-
                         <div class="relative group">
-                            <i data-lucide="users" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 transition-colors"></i>
-                            <input type="number" id="num-pax" placeholder="No. of Persons" 
-                                   class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm" min="1">
+                            <i data-lucide="users" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 text-left"></i>
+                            <input type="number" id="num-pax" placeholder="No. of Persons" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left" min="1" max="10">
                         </div>
-
-                        <div class="relative group">
-                            <i data-lucide="map-pin" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500"></i>
-                            <input type="text" id="pickup-loc" placeholder="Pickup Location" 
-                                   class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm">
+                        <div class="relative group text-left">
+                            <i data-lucide="map-pin" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500 text-left"></i>
+                            <input type="text" id="pickup-loc" placeholder="Pickup Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left">
                         </div>
-
-                        <div class="relative group">
-                            <i data-lucide="navigation" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500"></i>
-                            <input type="text" id="drop-loc" placeholder="Drop Location" 
-                                   class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm">
+                        <div class="relative group text-left text-left">
+                            <i data-lucide="navigation" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500 text-left"></i>
+                            <input type="text" id="drop-loc" placeholder="Drop Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left">
                         </div>
-
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="relative group">
-                                <i data-lucide="calendar" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <input type="date" id="ride-date" 
-                                       class="form-input w-full pl-14 pr-4 py-5 rounded-[1.5rem] outline-none text-xs font-bold">
-                            </div>
-                            <div class="relative group">
-                                <i data-lucide="clock" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <input type="time" id="ride-time" 
-                                       class="form-input w-full pl-14 pr-4 py-5 rounded-[1.5rem] outline-none text-xs font-bold">
-                            </div>
+                            <input type="date" id="ride-date" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold text-left">
+                            <input type="time" id="ride-time" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold text-left">
                         </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="relative group">
-                                <i data-lucide="truck" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <select id="vehicle-type" class="form-input w-full pl-14 pr-4 py-5 rounded-[1.5rem] outline-none text-xs font-bold appearance-none bg-white">
-                                    <option value="Wagon R">Wagon R</option>
-                                    <option value="Dezire">Dezire</option>
-                                    <option value="Sumo">Sumo</option>
-                                    <option value="Eeco">Eeco</option>
-                                    <option value="Innova">Innova</option>
-                                    <option value="Crysta">Crysta</option>
-                                </select>
-                            </div>
-                            <div class="relative group">
-                                <i data-lucide="repeat" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                                <select id="trip-type" class="form-input w-full pl-14 pr-4 py-5 rounded-[1.5rem] outline-none text-xs font-bold appearance-none bg-white">
-                                    <option value="One Way">One Way</option>
-                                    <option value="Both Way (Round)">Both Way</option>
-                                </select>
-                            </div>
+                        <div class="grid grid-cols-2 gap-4 text-left">
+                            <select id="vehicle-type" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold appearance-none bg-white text-left">
+                                <option value="Wagon R">Wagon R</option>
+                                <option value="Dezire">Dezire</option>
+                                <option value="Sumo">Sumo</option>
+                                <option value="Eeco">Eeco</option>
+                                <option value="Innova">Innova</option>
+                                <option value="Crysta">Crysta</option>
+                            </select>
+                            <select id="trip-type" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold appearance-none bg-white text-left">
+                                <option value="One Way">One Way</option>
+                                <option value="Both Way (Round)">Both Way</option>
+                            </select>
                         </div>
-
-                        <button onclick="submitToWhatsApp()" class="group w-full bg-yellow-brand text-black py-5 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 shadow-2xl shadow-yellow-400/30 hover:bg-yellow-500 tap-scale transition-all mt-4">
-                            <i data-lucide="message-circle" class="w-6 h-6 fill-green-500 text-green-500 group-hover:scale-110 transition-transform"></i>
+                        <button onclick="submitToWhatsApp()" class="group w-full bg-yellow-brand text-black py-5 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 shadow-2xl mt-4 text-center text-center">
+                            <i data-lucide="message-circle" class="w-6 h-6 fill-green-500 text-green-500 text-left"></i>
                             Book via WhatsApp
                         </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- OUR FLEET -->
+            <section class="mt-4 px-2 pb-20 text-left text-left text-left">
+                <h3 class="font-bold text-xl text-slate-900 tracking-tight mb-4">Our Fleet</h3>
+                <div class="flex overflow-x-auto gap-4 no-scrollbar pb-4 text-left">
+                    <div class="min-w-[140px] bg-white p-4 rounded-3xl border border-gray-100 card-shadow text-center">
+                        <i data-lucide="car" class="w-8 h-8 mx-auto mb-2 text-yellow-600"></i>
+                        <h5 class="font-bold text-xs">Small Car</h5>
+                        <p class="text-[9px] text-slate-400 uppercase">4 Seater (WagonR)</p>
+                    </div>
+                    <div class="min-w-[140px] bg-white p-4 rounded-3xl border border-gray-100 card-shadow text-center">
+                        <i data-lucide="truck" class="w-8 h-8 mx-auto mb-2 text-blue-600"></i>
+                        <h5 class="font-bold text-xs">Luxury SUV</h5>
+                        <p class="text-[9px] text-slate-400 uppercase">6 Seater (Innova)</p>
+                    </div>
+                    <div class="min-w-[140px] bg-white p-4 rounded-3xl border border-gray-100 card-shadow text-center">
+                        <i data-lucide="users" class="w-8 h-8 mx-auto mb-2 text-green-600"></i>
+                        <h5 class="font-bold text-xs">Standard MUV</h5>
+                        <p class="text-[9px] text-slate-400 uppercase">8 Seater (Sumo)</p>
                     </div>
                 </div>
             </section>
         </div>
 
         <!-- SIGHTSEEING PAGE -->
-        <div id="page-tours" class="page-hidden page-content px-4 pt-6 min-h-[70vh]">
-            <div class="flex justify-between items-center mb-8 px-2">
-                <div class="text-left">
-                    <h2 class="text-2xl font-black text-slate-900 tracking-tight">Sightseeing</h2>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Explore Himalayan Routes</p>
+        <div id="page-tours" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
+            <div class="flex justify-between items-center mb-8 px-2 text-left text-left">
+                <div class="text-left text-left">
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight text-left">Sightseeing</h2>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 text-left">Darjeeling Special Tours</p>
                 </div>
-                <div class="w-12 h-12 bg-yellow-brand rounded-2xl flex items-center justify-center shadow-lg shadow-yellow-400/20 text-black">
+                <div class="w-12 h-12 bg-yellow-brand rounded-2xl flex items-center justify-center shadow-lg shadow-yellow-400/20 text-black text-black">
                     <i data-lucide="map" class="w-6 h-6"></i>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 gap-6 pb-20">
-                <!-- Tiger Hill -->
-                <div onclick="bookService('Tiger Hill Sunrise', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow group tap-scale transition-all cursor-pointer bg-slate-200">
-                    <img src="https://lh3.googleusercontent.com/d/1i05D7yI2IBvoYUOKreBipAEFMxjMyBPx" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Tiger Hill Sunrise Darjeeling"
-                         onerror="this.src='https://images.unsplash.com/photo-1544735745-b89b37255f44?auto=format&fit=crop&q=80&w=600'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end text-left">
-                        <div>
-                            <span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-yellow-600 mb-2 inline-block">Iconic Sunrise</span>
-                            <h3 class="text-white text-xl font-bold">Tiger Hill Sunrise</h3>
-                        </div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg">
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                </div>
+                <script>
+                    const sightseeing = [
+                        { name: 'TigerMix Tour', sub: 'Tiger Hill + Mix Points', img: 'https://lh3.googleusercontent.com/d/1i05D7yI2IBvoYUOKreBipAEFMxjMyBPx' },
+                        { name: 'Local 10 Point', sub: 'Full City Tour', img: 'https://lh3.googleusercontent.com/d/1uWpPlXlmsm8Kfu2oT2yQNn8XKOSsv7aT' },
+                        { name: '7 Point Tour', sub: 'Popular Choice', img: 'https://lh3.googleusercontent.com/d/1P9aTAU0hOUa3ruKhRB2ml28MMct6qk1g' },
+                        { name: '3 Point Tour', sub: 'Morning Ghoom', img: 'https://lh3.googleusercontent.com/d/17kazOKVHVy8iuglnrIpz3CgxN8gYNX84' },
+                        { name: 'Lamahatta Route', sub: 'Pine Forest Path', img: 'https://lh3.googleusercontent.com/d/1h1dMtKedFua1uPCjyvYk7qTbVsLYpF0f' },
+                        { name: 'Tukvar Route', sub: 'Tea Garden Valley', img: 'https://lh3.googleusercontent.com/d/1WmqBH3y77GGgmdrkrNrEyoQnYTYk2YJv' },
+                        { name: 'Mungpoo Route', sub: 'Rabindra Bhavan', img: 'https://lh3.googleusercontent.com/d/1ygrTbXStNbKbIJEGsPQhKJ7Wx3M19Qnr' },
+                        { name: 'Kurseong Route', sub: 'White Orchid Town', img: 'https://lh3.googleusercontent.com/d/1hu_TzrGhqm6JXgWxqdPHHzvkvgbaJZBM' },
+                        { name: 'Kalimpong Tour', sub: 'Day Sightseeing', img: 'https://lh3.googleusercontent.com/d/1RlT7KYKiba5n78MhmycJNGQq4jRhZYKa' },
+                        { name: 'Mirik Route', sub: 'Lake & Pashupati', img: 'https://lh3.googleusercontent.com/d/1n4weJlE0ti8JSnFl3dhHOrud-yrQZ5k6' }
+                    ];
 
-                <!-- Local 10 Point -->
-                <div onclick="bookService('Local 10 Point Tour', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow group tap-scale transition-all cursor-pointer bg-slate-200">
-                    <img src="https://images.unsplash.com/photo-1626697591431-4700949cc16b?auto=format&fit=crop&q=80&w=600" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Darjeeling Local Sightseeing"
-                         onerror="this.src='https://images.unsplash.com/photo-1582234052327-046522c7104b?auto=format&fit=crop&q=80&w=600'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end text-left">
-                        <div>
-                            <span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-blue-600 mb-2 inline-block">Best of Town</span>
-                            <h3 class="text-white text-xl font-bold">Local 10 Point</h3>
-                        </div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg">
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tukvar Valley -->
-                <div onclick="bookService('Tukvar Valley Route', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow group tap-scale transition-all cursor-pointer bg-slate-200">
-                    <img src="https://images.unsplash.com/photo-1590054387835-ab72678fef01?auto=format&fit=crop&q=80&w=600" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Tukvar Valley Tea Gardens"
-                         onerror="this.src='https://images.unsplash.com/photo-1582234052327-046522c7104b?auto=format&fit=crop&q=80&w=600'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end text-left">
-                        <div>
-                            <span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-emerald-600 mb-2 inline-block">Tea Garden Route</span>
-                            <h3 class="text-white text-xl font-bold">Tukvar Valley</h3>
-                        </div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg">
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lamahatta -->
-                <div onclick="bookService('Lamahatta Route', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow group tap-scale transition-all cursor-pointer bg-slate-200">
-                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=600" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Lamahatta Eco Park Pine Forest"
-                         onerror="this.src='https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=600'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end text-left">
-                        <div>
-                            <span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-purple-600 mb-2 inline-block">Pine Forest</span>
-                            <h3 class="text-white text-xl font-bold">Lamahatta Route</h3>
-                        </div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg">
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mirik -->
-                <div onclick="bookService('Mirik Route', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow group tap-scale transition-all cursor-pointer bg-slate-200">
-                    <img src="https://lh3.googleusercontent.com/d/1n4weJlE0ti8JSnFl3dhHOrud-yrQZ5k6" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Mirik Lake Darjeeling"
-                         onerror="this.src='https://images.unsplash.com/photo-1582234052327-046522c7104b?auto=format&fit=crop&q=80&w=600'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end text-left">
-                        <div>
-                            <span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-orange-600 mb-2 inline-block">Lake & Border</span>
-                            <h3 class="text-white text-xl font-bold">Mirik Route</h3>
-                        </div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg">
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kalimpong -->
-                <div onclick="bookService('Kalimpong Day Tour', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow group tap-scale transition-all cursor-pointer bg-slate-200">
-                    <img src="https://images.unsplash.com/photo-1548013146-72479768bbf4?auto=format&fit=crop&q=80&w=600" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Kalimpong Hill Station"
-                         onerror="this.src='https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=600'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end text-left">
-                        <div>
-                            <span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-indigo-600 mb-2 inline-block">Hill Station</span>
-                            <h3 class="text-white text-xl font-bold">Kalimpong Route</h3>
-                        </div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg">
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                </div>
+                    sightseeing.forEach(item => {
+                        document.write(`
+                            <div onclick="bookService('${item.name}', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow tap-scale cursor-pointer bg-slate-200">
+                                <img src="${item.img}" class="w-full h-full object-cover" alt="${item.name}">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
+                                <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                                    <div class="text-left text-left text-left"><span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-yellow-600 mb-1 inline-block text-left text-left text-left text-left text-left">${item.sub}</span><h3 class="text-white text-xl font-bold text-left text-left text-left text-left text-left">${item.name}</h3></div>
+                                    <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg text-left"><i data-lucide="arrow-right" class="w-5 h-5 text-black"></i></div>
+                                </div>
+                            </div>
+                        `);
+                    });
+                </script>
             </div>
-            <div class="h-10"></div>
         </div>
 
-        <!-- PICKUP & DROP PAGE -->
-        <div id="page-pickup" class="page-hidden page-content px-4 pt-6 min-h-[70vh]">
-            <div class="flex justify-between items-center mb-8 px-2">
-                <div class="text-left">
-                    <h2 class="text-2xl font-black text-slate-900 tracking-tight">Pickup & Drop</h2>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 text-left">Inter-City & Local Transfers</p>
+        <!-- TRANSFERS PAGE -->
+        <div id="page-pickup" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
+             <div class="flex justify-between items-center mb-8 px-2 text-left text-left text-left text-left">
+                <div class="text-left text-left text-left text-left">
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight text-left">Transfers</h2>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 text-left text-left text-left">Select Destination</p>
                 </div>
-                <div class="w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 text-white">
+                <div class="w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 text-white text-white text-white">
                     <i data-lucide="plane-takeoff" class="w-6 h-6"></i>
                 </div>
             </div>
-
-            <div class="grid grid-cols-2 gap-4 pb-20">
-                <div onclick="bookService('Specific Destination', 'Current Location')" class="col-span-2 bg-yellow-brand/10 p-6 rounded-[2rem] card-shadow border border-yellow-200 flex items-center gap-5 tap-scale group transition-all cursor-pointer">
-                    <div class="w-16 h-16 bg-yellow-brand rounded-2xl flex items-center justify-center shadow-md text-black">
-                        <i data-lucide="map-pin" class="w-8 h-8"></i>
-                    </div>
-                    <div class="text-left">
-                        <h3 class="font-black text-slate-900">Local Pickup & Drop</h3>
-                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Point-to-Point in Town</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="ml-auto w-5 h-5 text-slate-400"></i>
-                </div>
-
-                <div onclick="bookService('Bagdogra Airport (IXB)', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600">
-                        <i data-lucide="plane" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold text-sm">Bagdogra Airport</h3>
-                </div>
-                <div onclick="bookService('NJP Station', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600">
-                        <i data-lucide="train" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold text-sm">NJP Station</h3>
-                </div>
-                <div onclick="bookService('Gangtok', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600">
-                        <i data-lucide="mountain" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold text-sm">Gangtok</h3>
-                </div>
-                <div onclick="bookService('Siliguri Town', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600">
-                        <i data-lucide="map-pinned" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold text-sm">Siliguri Drop</h3>
-                </div>
-                <div onclick="bookService('Kalimpong', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600">
-                        <i data-lucide="navigation" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold text-sm">Kalimpong</h3>
-                </div>
-                <div onclick="bookService('Pelling / Ravangla', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600">
-                        <i data-lucide="cloud-sun" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold text-sm">Sikkim Tour</h3>
-                </div>
-            </div>
-            <div class="h-10"></div>
-        </div>
-
-        <!-- MY RIDES PAGE -->
-        <div id="page-rides" class="page-hidden page-content px-6 pt-20 text-center min-h-[70vh]">
-            <div class="w-40 h-40 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 border-8 border-white shadow-inner text-slate-200">
-                <i data-lucide="history" class="w-16 h-16"></i>
-            </div>
-            <h2 class="text-2xl font-bold text-slate-900 mb-3">No Active Rides</h2>
-            <p class="text-slate-400 text-sm max-w-[250px] mx-auto mb-10 leading-relaxed text-center">Planning a trip? Your upcoming journey details will appear right here.</p>
-            <button onclick="switchPage('home')" class="bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold text-sm tap-scale transition-all shadow-xl">Start Your Trip</button>
-        </div>
-
-        <!-- PROFILE PAGE -->
-        <div id="page-profile" class="page-hidden page-content px-6 pt-10 min-h-[70vh]">
-            <div class="bg-white rounded-[2.5rem] p-8 card-shadow border border-gray-50 mb-8">
-                <div class="flex items-center gap-6">
-                    <div class="w-24 h-24 bg-yellow-brand rounded-[2rem] flex items-center justify-center text-4xl border-4 border-white shadow-xl rotate-3 text-black">
-                        <i data-lucide="user" class="w-10 h-10"></i>
-                    </div>
-                    <div class="text-left">
-                        <h2 class="text-2xl font-black text-slate-900 leading-none mb-1">Guest</h2>
-                        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Himalayan Traveler</p>
-                    </div>
-                </div>
-            </div>
             
-            <div class="space-y-3">
-                <button class="w-full flex items-center justify-between p-6 bg-white rounded-3xl border border-gray-100 font-bold text-sm shadow-sm group tap-scale transition-all">
-                    <span class="flex items-center gap-4"><i data-lucide="settings" class="w-5 h-5 text-slate-400 group-hover:text-yellow-600 transition-colors"></i> Settings</span>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
-                </button>
-                <button class="w-full flex items-center justify-between p-6 bg-white rounded-3xl border border-gray-100 font-bold text-sm shadow-sm group tap-scale transition-all">
-                    <span class="flex items-center gap-4"><i data-lucide="help-circle" class="w-5 h-5 text-slate-400 group-hover:text-yellow-600 transition-colors"></i> Help & Support</span>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
-                </button>
+            <div class="grid grid-cols-2 gap-4 pb-20 text-left text-left">
+                <script>
+                    const transfers = [
+                        { name: 'NJP', icon: 'train' },
+                        { name: 'AIRPORT', icon: 'plane' },
+                        { name: 'SILIGURI JN', icon: 'map-pin' },
+                        { name: 'KALIMPONG', icon: 'mountain' },
+                        { name: 'KURSEONG', icon: 'navigation-2' },
+                        { name: 'MUNGPOO', icon: 'leaf' },
+                        { name: 'GANGTOK', icon: 'cloud' },
+                        { name: 'JORETHANG', icon: 'milestone' },
+                        { name: 'SITTONG', icon: 'home' },
+                        { name: 'MANEBHANJYANG', icon: 'truck' }
+                    ];
+
+                    transfers.forEach(dest => {
+                        document.write(`
+                            <div onclick="bookService('${dest.name}', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer text-blue-600">
+                                <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600 text-blue-600 text-blue-600"><i data-lucide="${dest.icon}" class="w-8 h-8"></i></div>
+                                <h3 class="font-bold text-sm text-slate-800 text-center text-center text-center text-center">${dest.name}</h3>
+                            </div>
+                        `);
+                    });
+                </script>
+                <div onclick="bookService('Customized Drop', 'Current Location')" class="col-span-2 bg-slate-900 p-6 rounded-[2rem] border border-slate-700 flex items-center gap-5 tap-scale group cursor-pointer mt-4 text-left">
+                    <div class="w-16 h-16 bg-yellow-brand rounded-2xl flex items-center justify-center text-black text-black text-black"><i data-lucide="edit-3" class="w-8 h-8"></i></div>
+                    <div class="text-left text-left"><h3 class="font-black text-white uppercase text-sm text-left text-left">Customized Location</h3><p class="text-[10px] font-bold text-slate-400 uppercase text-left text-left">Specify anywhere else</p></div>
+                    <i data-lucide="arrow-up-right" class="ml-auto w-5 h-5 text-yellow-brand"></i>
+                </div>
             </div>
         </div>
+
+        <!-- HYPERLOCAL PAGE -->
+        <div id="page-hyperlocal" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left">Hyperlocal Runs</h2>
+            <div class="space-y-4 pb-20 text-left">
+                <script>
+                    const localRuns = [
+                        { name: 'Hotel to Mall Road', dest: 'Chowrasta / Mall Road', icon: 'map-pin', color: 'text-green-600', bg: 'bg-green-50' },
+                        { name: 'Grocery / Errands', dest: 'Supermarket Area', icon: 'shopping-cart', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                        { name: 'Medical / Hospital', dest: 'Eden/Planters Hospital', icon: 'heart-pulse', color: 'text-red-600', bg: 'bg-red-50' },
+                        { name: 'Ropeway / Zoo Drop', dest: 'Ropeway Entrance', icon: 'cable-car', color: 'text-blue-600', bg: 'bg-blue-50' },
+                        { name: 'Restaurant / Cafe', dest: 'Glenarys/Local Cafe', icon: 'utensils', color: 'text-pink-600', bg: 'bg-pink-50' },
+                        { name: 'School Pickup/Drop', dest: 'Local School', icon: 'graduation-cap', color: 'text-slate-600', bg: 'bg-slate-100' },
+                        { name: 'Courier / Parcel', dest: 'Courier Office', icon: 'package', color: 'text-blue-600', bg: 'bg-blue-50' },
+                        { name: 'Salon / Barber', dest: 'Local Salon', icon: 'scissors', color: 'text-pink-600', bg: 'bg-pink-50' }
+                    ];
+
+                    localRuns.forEach(run => {
+                        document.write(`
+                            <div onclick="bookService('${run.dest}', 'Current Location')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group cursor-pointer text-left">
+                                <div class="w-14 h-14 ${run.bg} rounded-2xl flex items-center justify-center ${run.color}"><i data-lucide="${run.icon}" class="w-8 h-8"></i></div>
+                                <div class="text-left text-left text-left text-left text-left text-left"><h3 class="font-bold text-slate-800 text-left text-left text-left text-left">${run.name}</h3><p class="text-[10px] text-slate-400 uppercase font-bold text-left text-left text-left text-left">Quick Town Transfer</p></div>
+                            </div>
+                        `);
+                    });
+                </script>
+            </div>
+        </div>
+
+        <!-- HELP & SUPPORT PAGE (UPDATED WITH FAQs) -->
+        <div id="page-help" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
+            <div class="flex justify-between items-center mb-8 px-2 text-left">
+                <div class="text-left text-left">
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight text-left">Help & Support</h2>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 text-left">24/7 Assistance</p>
+                </div>
+                <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center shadow-lg text-white text-white">
+                    <i data-lucide="headphones" class="w-6 h-6 text-white"></i>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-left text-left">
+                <a href="tel:8207219672" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group block text-left">
+                    <div class="w-14 h-14 bg-yellow-brand rounded-2xl flex items-center justify-center text-black shadow-md"><i data-lucide="phone-call" class="w-8 h-8"></i></div>
+                    <div class="text-left"><h3 class="font-bold text-slate-800 text-left">Call Support</h3><p class="text-sm font-black text-slate-900 text-left">+91 82072 19672</p></div>
+                </a>
+                <a href="https://wa.me/918207219672" target="_blank" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group block text-left">
+                    <div class="w-14 h-14 bg-green-500 rounded-2xl flex items-center justify-center text-white shadow-md"><i data-lucide="message-circle" class="w-8 h-8"></i></div>
+                    <div class="text-left"><h3 class="font-bold text-slate-800 text-left">WhatsApp Chat</h3><p class="text-xs font-bold text-slate-400 uppercase text-left">Instant Reply</p></div>
+                </a>
+                <!-- Telegram Support (NEW) -->
+                <a href="https://t.me/Darjeelinghost" target="_blank" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group block text-left">
+                    <div class="w-14 h-14 bg-blue-500 rounded-2xl flex items-center justify-center text-white shadow-md"><i data-lucide="send" class="w-8 h-8"></i></div>
+                    <div class="text-left"><h3 class="font-bold text-slate-800 text-left">Telegram</h3><p class="text-xs font-bold text-slate-400 uppercase text-left">@Darjeelinghost</p></div>
+                </a>
+                <!-- Email Support (NEW) -->
+                <a href="mailto:Darjeelinghost@gmail.com" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group block text-left">
+                    <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-600 shadow-md"><i data-lucide="mail" class="w-8 h-8"></i></div>
+                    <div class="text-left"><h3 class="font-bold text-slate-800 text-left">Email Us</h3><p class="text-xs font-bold text-slate-400 text-left lowercase">Darjeelinghost@gmail.com</p></div>
+                </a>
+            </div>
+
+            <!-- FAQs Section -->
+            <div class="mt-10 px-2 pb-20 text-left text-left text-left text-left">
+                <h3 class="font-bold text-xl text-slate-900 tracking-tight mb-4 text-left">Common Questions</h3>
+                <div class="space-y-4">
+                    <div class="p-5 bg-white rounded-3xl border border-gray-100 card-shadow text-left">
+                        <h4 class="font-bold text-sm text-slate-800 mb-2 text-left">Is the fuel price included?</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed text-left">Yes, all our quotes include fuel, driver allowance, and basic town tolls.</p>
+                    </div>
+                    <div class="p-5 bg-white rounded-3xl border border-gray-100 card-shadow text-left">
+                        <h4 class="font-bold text-sm text-slate-800 mb-2 text-left">Can I book for multiple days?</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed text-left">Absolutely. Select your first date and mention the multi-day plan in the WhatsApp chat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-16 px-6 text-center border-t border-white/5 mt-12 text-left text-left">
+        <div class="max-w-7xl mx-auto text-center text-center text-center text-center">
+            <div class="text-2xl font-bold font-serif text-white mb-2 uppercase tracking-tight text-center">Darjeeling taxi service</div>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-8 text-center text-center text-center">Safe. Reliable. Everywhere.</p>
+            <div class="space-y-2 mb-10 text-center text-center">
+                <p class="text-xs font-medium text-slate-400 text-center text-center">Powered by <span class="text-yellow-brand font-bold uppercase tracking-widest text-center text-center text-center text-center">Darjeelinghost</span></p>
+                <p class="text-[10px] uppercase font-black text-slate-600 tracking-widest text-center text-center text-center">UDYAM-WB-06-0038303</p>
+            </div>
+            <p class="text-[9px] uppercase tracking-[0.2em] text-slate-700 font-bold mt-8 text-center text-center text-center text-center">© 2026 DARJEELINGTAXI SERVICE.</p>
+        </div>
+    </footer>
+
     <!-- Bottom Navigation -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-gray-100 px-4 py-4 flex justify-between items-center lg:hidden z-50">
-        <button onclick="switchPage('home')" id="nav-home" class="flex-1 flex flex-col items-center text-yellow-brand transition-all tap-scale">
-            <i data-lucide="home" class="w-5 h-5"></i>
-            <span class="text-[8px] mt-1 font-black uppercase">Home</span>
-        </button>
-        <button onclick="switchPage('tours')" id="nav-tours" class="flex-1 flex flex-col items-center text-slate-300 transition-all tap-scale">
-            <i data-lucide="map" class="w-5 h-5"></i>
-            <span class="text-[8px] mt-1 font-black uppercase">Tours</span>
-        </button>
-        <button onclick="switchPage('pickup')" id="nav-pickup" class="flex-1 flex flex-col items-center text-slate-300 transition-all tap-scale">
-            <i data-lucide="plane-takeoff" class="w-5 h-5"></i>
-            <span class="text-[8px] mt-1 font-black uppercase">Pickup</span>
-        </button>
-        <button onclick="switchPage('rides')" id="nav-rides" class="flex-1 flex flex-col items-center text-slate-300 transition-all tap-scale">
-            <i data-lucide="calendar-range" class="w-5 h-5"></i>
-            <span class="text-[8px] mt-1 font-black uppercase">Rides</span>
-        </button>
-        <button onclick="switchPage('profile')" id="nav-profile" class="flex-1 flex flex-col items-center text-slate-300 transition-all tap-scale">
-            <i data-lucide="user-circle" class="w-5 h-5"></i>
-            <span class="text-[8px] mt-1 font-black uppercase">Profile</span>
-        </button>
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-gray-100 px-4 py-4 flex justify-between items-center lg:hidden z-50 text-center text-center">
+        <button onclick="switchPage('home')" id="nav-home" class="flex-1 flex flex-col items-center text-yellow-brand tap-scale"><i data-lucide="home" class="w-5 h-5 text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center">Home</span></button>
+        <button onclick="switchPage('tours')" id="nav-tours" class="flex-1 flex flex-col items-center text-slate-300 tap-scale"><i data-lucide="map" class="w-5 h-5 text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center">Tours</span></button>
+        <button onclick="switchPage('pickup')" id="nav-pickup" class="flex-1 flex flex-col items-center text-slate-300 tap-scale"><i data-lucide="plane-takeoff" class="w-5 h-5 text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center">Pickup</span></button>
+        <button onclick="switchPage('help')" id="nav-help" class="flex-1 flex flex-col items-center text-slate-300 tap-scale"><i data-lucide="help-circle" class="w-5 h-5 text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center">Help</span></button>
     </div>
 
     <script>
         lucide.createIcons();
-
         const WHATSAPP_NUMBER = "918207219672";
 
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
-            const msgEl = document.getElementById('toast-message');
-            const iconEl = document.getElementById('toast-icon');
-            
-            msgEl.innerText = message;
-            
-            if (type === 'error') {
-                iconEl.className = 'w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white';
-                iconEl.innerHTML = '<i data-lucide="alert-circle" class="w-5 h-5"></i>';
-            } else {
-                iconEl.className = 'w-10 h-10 rounded-full bg-yellow-brand flex items-center justify-center text-black';
-                iconEl.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
-            }
-            lucide.createIcons();
-            
+            document.getElementById('toast-message').innerText = message;
+            if (type === 'error') document.getElementById('toast-icon').className = 'w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white';
+            else document.getElementById('toast-icon').className = 'w-10 h-10 rounded-full bg-yellow-brand flex items-center justify-center text-black';
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar-menu');
             const overlay = document.getElementById('sidebar-overlay');
-            const isOpen = sidebar.classList.contains('open');
-            
-            if (isOpen) {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('open');
-            } else {
-                sidebar.classList.add('open');
-                overlay.classList.add('open');
-            }
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
         }
 
         function switchPage(pageId) {
-            const pages = ['home', 'tours', 'pickup', 'rides', 'profile'];
+            const pages = ['home', 'tours', 'pickup', 'hyperlocal', 'help'];
             pages.forEach(p => {
                 const pageEl = document.getElementById(`page-${p}`);
                 const navEl = document.getElementById(`nav-${p}`);
-                
-                if (p === pageId) {
-                    pageEl.classList.remove('page-hidden');
-                    pageEl.classList.add('page-active');
-                    navEl.classList.add('text-yellow-brand');
-                    navEl.classList.remove('text-slate-300');
-                } else {
-                    pageEl.classList.add('page-hidden');
-                    pageEl.classList.remove('page-active');
-                    navEl.classList.remove('text-yellow-brand');
-                    navEl.classList.add('text-slate-300');
+                if (pageEl) {
+                    if (p === pageId) {
+                        pageEl.classList.remove('page-hidden'); pageEl.classList.add('page-active');
+                        if(navEl) { navEl.classList.add('text-yellow-brand'); navEl.classList.remove('text-slate-300'); }
+                    } else {
+                        pageEl.classList.add('page-hidden'); pageEl.classList.remove('page-active');
+                        if(navEl) { navEl.classList.remove('text-yellow-brand'); navEl.classList.add('text-slate-300'); }
+                    }
                 }
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function scrollToBooking() {
-            document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth' });
-        }
+        function scrollToBooking() { document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth' }); }
 
         function bookService(drop, pickup = "Darjeeling Town") {
             switchPage('home');
@@ -645,7 +532,7 @@
                 document.getElementById('pickup-loc').value = pickup;
                 document.getElementById('drop-loc').value = drop;
                 scrollToBooking();
-                showToast(`Booking set: ${drop}`);
+                showToast(`Destination Set: ${drop}`);
             }, 500);
         }
 
@@ -659,66 +546,19 @@
             const vehicle = document.getElementById('vehicle-type').value;
             const tripType = document.getElementById('trip-type').value;
 
-            if (!name || !pax || !pickup || !drop || !date || !time) {
-                showToast("Please fill all details!", "error");
-                return;
-            }
+            if (!name || !pax || !pickup || !drop || !date || !time) { showToast("Please fill all details!", "error"); return; }
 
-            showToast("Redirecting to WhatsApp...");
-
-            const message = `*NEW TAXI BOOKING REQUEST*\n` +
-                            `--------------------------\n` +
-                            `👤 *Name:* ${name}\n` +
-                            `👥 *Persons:* ${pax}\n` +
-                            `📍 *Pickup:* ${pickup}\n` +
-                            `🏁 *Drop:* ${drop}\n` +
-                            `📅 *Date:* ${date}\n` +
-                            `🕒 *Time:* ${time}\n` +
-                            `🚗 *Vehicle:* ${vehicle}\n` +
-                            `🔄 *Trip:* ${tripType}\n` +
-                            `--------------------------\n` +
-                            `Hello, I would like to book a ride for the above details. Please confirm the rate.`;
-
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            
-            setTimeout(() => {
-                window.open(whatsappUrl, '_blank');
-            }, 800);
+            const msg = `*NEW TAXI BOOKING REQUEST*\n--------------------------\n👤 Name: ${name}\n👥 Persons: ${pax}\n📍 Pickup: ${pickup}\n🏁 Drop: ${drop}\n📅 Date: ${date}\n🕒 Time: ${time}\n🚗 Vehicle: ${vehicle}\n🔄 Trip: ${tripType}\n--------------------------\nHello, I would like to book a ride. Please confirm rates.`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        const inputs = ['cust-name', 'num-pax', 'pickup-loc', 'drop-loc', 'ride-date', 'ride-time'];
-        inputs.forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                const filled = inputs.filter(id => {
-                    const el = document.getElementById(id);
-                    return el && el.value.length > 0;
-                }).length;
-                const bar = document.getElementById('step-2');
-                if (filled >= 3) {
-                    bar.classList.add('bg-yellow-brand');
-                    bar.classList.remove('bg-gray-100');
-                } else {
-                    bar.classList.remove('bg-yellow-brand');
-                    bar.classList.add('bg-gray-100');
-                }
-            });
-        });
-
         window.onload = () => {
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('ride-date').value = tomorrow.toISOString().split('T')[0];
-            document.getElementById('ride-date').min = new Date().toISOString().split('T')[0];
             document.getElementById('ride-time').value = "09:00";
-            
             document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.5s ease';
-                document.body.style.opacity = '1';
-            }, 100);
+            setTimeout(() => { document.body.style.transition = 'opacity 0.5s ease'; document.body.style.opacity = '1'; }, 100);
         };
     </script>
 </body>
 </html>
-
-```
