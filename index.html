@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="DarjeelingTaxi">
     
-    <!-- Link to manifest (Using a more standardized structure in the Data URI) -->
+    <!-- Link to manifest -->
     <link rel="manifest" href='data:application/manifest+json,{"name":"Darjeeling Taxi Service","short_name":"DarjeelingTaxi","description":"Safe and Reliable Hill Transfers","start_url":"/","display":"standalone","background_color":"#FDFDFD","theme_color":"#FFC801","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/1039/1039913.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}'>
 
     <!-- Tailwind CSS -->
@@ -38,11 +38,37 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
         }
 
-        .hero-main-bg {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.8) 100%), 
-                        url('https://lh3.googleusercontent.com/d/1hVvJE_LnnqG4K5kTTLvUU7qm1i-UYoh3');
+        /* Carousel Styles */
+        .hero-carousel-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+            border-radius: 2.5rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
             background-size: cover;
             background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 41, 59, 0.4) 100%);
         }
 
         .page-content {
@@ -98,21 +124,78 @@
             transform: translateY(0) translateX(-50%);
         }
 
+        #pwa-modal {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(100%);
+        }
+        #pwa-modal.active {
+            transform: translateY(0);
+        }
+
         .tap-scale:active {
             transform: scale(0.95);
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        @keyframes custom-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .fab-pulse {
+            animation: custom-pulse 2s infinite;
+        }
     </style>
 </head>
 <body class="pb-24 lg:pb-0 text-slate-800">
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/918207219672" target="_blank" class="fixed bottom-24 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white shadow-2xl z-40 tap-scale fab-pulse">
+        <i data-lucide="message-circle" class="w-7 h-7 fill-current"></i>
+    </a>
+
+    <!-- PWA Install Modal (Step-by-step for iOS & Trigger for Android) -->
+    <div id="pwa-overlay" onclick="dismissPWAModal()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[100] hidden opacity-0 transition-opacity duration-500">
+        <div id="pwa-modal" onclick="event.stopPropagation()" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[3rem] p-8 shadow-2xl flex flex-col items-center text-center">
+            <div class="w-16 h-1.5 bg-slate-100 rounded-full mb-8"></div>
+            <div class="w-20 h-20 bg-yellow-brand rounded-3xl flex items-center justify-center mb-6 shadow-xl shadow-yellow-400/30">
+                <i data-lucide="taxi" class="w-10 h-10 text-black"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-900 mb-2">Install App</h2>
+            <p id="pwa-desc" class="text-slate-500 text-sm mb-8 px-4">Get the best experience by installing Darjeeling Taxi on your home screen.</p>
+            
+            <div id="android-install-ui" class="w-full">
+                <button onclick="triggerPWAInstall()" class="w-full bg-yellow-brand text-black py-5 rounded-2xl font-black uppercase tracking-widest shadow-lg tap-scale mb-4">
+                    Confirm Installation
+                </button>
+            </div>
+            
+            <div id="ios-install-ui" class="hidden w-full space-y-4">
+                <div class="bg-slate-50 p-5 rounded-2xl text-left border border-slate-100">
+                    <p class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-3">
+                        <span class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-[10px]">1</span>
+                        Tap the <i data-lucide="share" class="w-4 h-4 text-blue-500"></i> 'Share' button
+                    </p>
+                    <p class="text-xs font-bold text-slate-700 flex items-center gap-3">
+                        <span class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-[10px]">2</span>
+                        Select <i data-lucide="plus-square" class="w-4 h-4 text-slate-900"></i> 'Add to Home Screen'
+                    </p>
+                </div>
+            </div>
+
+            <button onclick="dismissPWAModal()" class="mt-4 text-slate-400 font-bold text-xs uppercase tracking-widest py-2">
+                Close
+            </button>
+        </div>
+    </div>
+
     <!-- Sidebar Menu Overlay -->
     <div id="sidebar-overlay" onclick="toggleMenu()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[60]"></div>
     
-    <!-- Sidebar Menu Content -->
+    <!-- Sidebar -->
     <aside id="sidebar-menu" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-[70] shadow-2xl flex flex-col text-left">
-        <div class="p-8 border-b border-gray-100 flex items-center justify-between w-full">
+        <div class="p-8 border-b border-gray-100 flex items-center justify-between w-full text-left">
             <div class="flex items-center gap-2">
                 <i data-lucide="taxi" class="text-yellow-brand w-6 h-6"></i>
                 <span class="font-bold text-lg tracking-tight">Darjeelingtaxi</span>
@@ -122,7 +205,7 @@
             </button>
         </div>
         
-        <nav class="flex-1 p-6 space-y-1">
+        <nav class="flex-1 p-6 space-y-1 text-left">
             <button onclick="switchPage('home'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
                 <i data-lucide="home" class="w-4 h-4 group-hover:text-yellow-600"></i> Home
             </button>
@@ -135,26 +218,26 @@
             <button onclick="switchPage('hyperlocal'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
                 <i data-lucide="map-pin" class="w-4 h-4 group-hover:text-yellow-600"></i> Hyperlocal
             </button>
-            <button onclick="switchPage('about'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-yellow-50 font-bold text-slate-700 transition-colors group text-sm text-left">
-                <i data-lucide="info" class="w-4 h-4 group-hover:text-yellow-600"></i> About Us
+
+            <!-- PWA Install Button in Menu (NEW) -->
+            <button onclick="showPWAModal(); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl bg-slate-900 font-bold text-white transition-all group text-sm text-left mt-4 shadow-lg tap-scale">
+                <i data-lucide="download" class="w-4 h-4 text-yellow-brand"></i> Install App
             </button>
 
-            <!-- Manual Install PWA Button (Hidden by default) -->
-            <button id="pwa-install-btn" onclick="triggerPWAInstall()" class="hidden w-full flex items-center gap-4 p-3 rounded-xl bg-yellow-brand font-bold text-black transition-colors text-sm text-left mt-4 shadow-lg shadow-yellow-400/20">
-                <i data-lucide="download-cloud" class="w-4 h-4"></i> Install App
+            <div class="h-px bg-gray-100 my-4 text-left"></div>
+            <button onclick="switchPage('about'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 font-bold text-slate-500 transition-colors group text-sm text-left">
+                <i data-lucide="info" class="w-4 h-4"></i> About Us
             </button>
-
-            <div class="h-px bg-gray-100 my-4"></div>
             <button onclick="switchPage('help'); toggleMenu();" class="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 font-bold text-slate-500 transition-colors group text-sm text-left">
                 <i data-lucide="help-circle" class="w-4 h-4"></i> Help & Support
             </button>
         </nav>
         
-        <div class="p-8 border-t border-gray-100">
+        <div class="p-8 border-t border-gray-100 text-left">
             <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-4">Official Dispatch</p>
             <a href="tel:918207219672" class="flex items-center gap-3 text-sm font-bold text-slate-900">
-                <div class="w-8 h-8 bg-yellow-brand rounded-full flex items-center justify-center text-black">
-                    <i data-lucide="phone" class="w-4 h-4 fill-current"></i>
+                <div class="w-8 h-8 bg-yellow-brand rounded-full flex items-center justify-center text-black text-left">
+                    <i data-lucide="phone" class="w-4 h-4 fill-current text-left"></i>
                 </div>
                 +91 82072 19672
             </a>
@@ -164,207 +247,279 @@
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-24 left-1/2 z-[100] w-[90%] max-w-sm bg-slate-900 text-white p-4 rounded-2xl flex items-center gap-3 shadow-2xl text-left">
         <div id="toast-icon" class="w-10 h-10 rounded-full bg-yellow-brand flex items-center justify-center text-black">
-            <i data-lucide="info" class="w-5 h-5"></i>
+            <i data-lucide="info" class="w-5 h-5 text-left"></i>
         </div>
-        <div class="flex-1">
-            <p id="toast-message" class="text-sm font-bold">Updated!</p>
-        </div>
+        <div class="flex-1"><p id="toast-message" class="text-sm font-bold">Updated!</p></div>
     </div>
 
     <!-- Header -->
-    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-gray-100">
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl px-6 py-4 flex justify-between items-center border-b border-gray-100 text-left">
         <div class="flex items-center gap-4">
             <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors tap-scale text-left">
                 <i data-lucide="align-left" class="w-6 h-6"></i>
             </button>
-            <h1 class="font-bold text-lg tracking-tight text-slate-900">Darjeelingtaxi service</h1>
+            <h1 class="font-bold text-lg tracking-tight text-slate-900 text-left">Darjeelingtaxi service</h1>
         </div>
-        <a href="tel:918207219672" class="w-11 h-11 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg shadow-yellow-400/30 tap-scale transition-transform">
-            <i data-lucide="phone" class="w-5 h-5 fill-current"></i>
-        </a>
+        <button onclick="shareApp()" class="w-11 h-11 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 shadow-sm tap-scale transition-transform text-left">
+            <i data-lucide="share" class="w-5 h-5 text-left"></i>
+        </button>
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-md mx-auto relative overflow-hidden">
+    <main class="max-w-md mx-auto relative overflow-hidden text-left">
         
         <!-- HOME PAGE -->
         <div id="page-home" class="page-active page-content px-4 pt-4">
-            <div class="relative h-64 rounded-[2.5rem] overflow-hidden hero-main-bg p-8 flex flex-col justify-center shadow-2xl shadow-slate-200 text-left">
-                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <div class="relative z-10 max-w-[85%]">
-                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-yellow-brand uppercase tracking-tighter mb-4">
-                        <i data-lucide="sparkles" class="w-3 h-3"></i> Safe. Reliable. Everywhere.
+            
+            <!-- Hero Carousel -->
+            <div class="hero-carousel-container text-left">
+                <div class="carousel-slide active" style="background-image: url('https://lh3.googleusercontent.com/d/1hVvJE_LnnqG4K5kTTLvUU7qm1i-UYoh3')">
+                    <div class="carousel-overlay"></div>
+                    <div class="relative z-10 text-left">
+                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-yellow-brand uppercase tracking-tighter mb-4 text-left text-left">
+                            <i data-lucide="sparkles" class="w-3 h-3 text-left"></i> Top Rated Service
+                        </div>
+                        <h2 class="text-white text-3xl font-extrabold leading-tight tracking-tight text-left">Premium Hill<br/><span class="text-yellow-brand text-4xl">Transfers.</span></h2>
+                        <button onclick="scrollToBooking()" class="mt-6 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl tap-scale transition-all text-left">Book Now</button>
                     </div>
-                    <h2 class="text-white text-3xl font-extrabold leading-tight tracking-tight">Premium Hill<br/><span class="text-yellow-brand text-4xl">Transfers.</span></h2>
-                    <button onclick="scrollToBooking()" class="mt-6 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl tap-scale transition-all">Book Now</button>
+                </div>
+                <div class="carousel-slide" style="background-image: url('https://lh3.googleusercontent.com/d/1hu_TzrGhqm6JXgWxqdPHHzvkvgbaJZBM')">
+                    <div class="carousel-overlay"></div>
+                    <div class="relative z-10 text-left">
+                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-yellow-brand uppercase tracking-tighter mb-4 text-left text-left">
+                            <i data-lucide="plane" class="w-3 h-3 text-left text-left"></i> Quick Pickups
+                        </div>
+                        <h2 class="text-white text-3xl font-extrabold leading-tight tracking-tight text-left">Airport & Station<br/><span class="text-yellow-brand text-4xl text-left">Pickups.</span></h2>
+                        <button onclick="switchPage('pickup')" class="mt-6 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl tap-scale transition-all text-left">View Rates</button>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('https://lh3.googleusercontent.com/d/1i05D7yI2IBvoYUOKreBipAEFMxjMyBPx')">
+                    <div class="carousel-overlay"></div>
+                    <div class="relative z-10 text-left text-left">
+                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-yellow-brand uppercase tracking-tighter mb-4 text-left text-left">
+                            <i data-lucide="map" class="w-3 h-3 text-left"></i> Local Guides
+                        </div>
+                        <h2 class="text-white text-3xl font-extrabold leading-tight tracking-tight text-left text-left text-left">Darjeeling City<br/><span class="text-yellow-brand text-4xl text-left text-left">Sightseeing.</span></h2>
+                        <button onclick="switchPage('tours')" class="mt-6 bg-yellow-brand text-black px-7 py-4 rounded-full font-bold text-sm shadow-xl tap-scale transition-all text-left">Explore Tours</button>
+                    </div>
+                </div>
+
+                <!-- Carousel Dots -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2 text-left">
+                    <div class="carousel-dot w-8 h-1.5 rounded-full bg-white transition-all duration-300" onclick="setSlide(0)"></div>
+                    <div class="carousel-dot w-2 h-1.5 rounded-full bg-white/40 transition-all duration-300" onclick="setSlide(1)"></div>
+                    <div class="carousel-dot w-2 h-1.5 rounded-full bg-white/40 transition-all duration-300" onclick="setSlide(2)"></div>
                 </div>
             </div>
 
             <!-- Quick Menu -->
-            <section class="mt-8 text-left">
-                <div class="grid grid-cols-3 gap-3 text-center">
-                    <div onclick="scrollToBooking()" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer">
-                        <div class="w-12 h-12 bg-yellow-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-yellow-brand transition-colors text-yellow-600">
+            <section class="mt-8 text-left text-left">
+                <div class="grid grid-cols-3 gap-3 text-center text-center">
+                    <div onclick="scrollToBooking()" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-center text-center">
+                        <div class="w-12 h-12 bg-yellow-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-yellow-brand transition-colors text-yellow-600 text-center">
                             <i data-lucide="car" class="w-6 h-6 group-hover:text-black"></i>
                         </div>
                         <span class="text-[9px] font-black text-slate-500 uppercase">Local</span>
                     </div>
-                    <div onclick="switchPage('pickup')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-blue-600">
-                        <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-blue-500">
-                            <i data-lucide="plane" class="w-6 h-6 group-hover:text-white"></i>
-                        </div>
-                        <span class="text-[9px] font-black text-slate-500 uppercase">Transfers</span>
+                    <div onclick="switchPage('pickup')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-blue-600 text-center text-center">
+                        <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-blue-500 text-center"><i data-lucide="plane" class="w-6 h-6 group-hover:text-white text-center"></i></div>
+                        <span class="text-[9px] font-black text-slate-500 uppercase text-center text-center">Transfers</span>
                     </div>
-                    <div onclick="switchPage('hyperlocal')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-green-600">
-                        <div class="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-500">
-                            <i data-lucide="zap" class="w-6 h-6 group-hover:text-white"></i>
-                        </div>
-                        <span class="text-[9px] font-black text-slate-500 uppercase">Hyperlocal</span>
+                    <div onclick="switchPage('hyperlocal')" class="bg-white p-4 rounded-[2rem] flex flex-col items-center justify-center card-shadow border border-gray-50 aspect-square group tap-scale transition-all cursor-pointer text-green-600 text-center text-center">
+                        <div class="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-500 text-center"><i data-lucide="zap" class="w-6 h-6 group-hover:text-white text-center text-center"></i></div>
+                        <span class="text-[9px] font-black text-slate-500 uppercase text-center text-center text-center text-center">Hyperlocal</span>
                     </div>
                 </div>
             </section>
 
             <!-- Booking Section -->
-            <section id="booking-section" class="mt-10 pb-10">
-                <div class="bg-white rounded-[3rem] p-8 card-shadow border border-gray-100">
-                    <h3 class="font-bold text-xl text-slate-900 tracking-tight text-left mb-8">Ride Details</h3>
-                    <div class="space-y-5 text-left">
-                        <div class="relative group">
-                            <i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600"></i>
-                            <input type="text" id="cust-name" placeholder="Full Name" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm">
-                        </div>
-                        <div class="relative group">
-                            <i data-lucide="users" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600"></i>
-                            <input type="number" id="num-pax" placeholder="No. of Persons" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm" min="1">
-                        </div>
-                        <div class="relative group">
-                            <i data-lucide="map-pin" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500"></i>
-                            <input type="text" id="pickup-loc" placeholder="Pickup Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm">
-                        </div>
-                        <div class="relative group">
-                            <i data-lucide="navigation" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500"></i>
-                            <input type="text" id="drop-loc" placeholder="Drop Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm">
-                        </div>
+            <section id="booking-section" class="mt-10">
+                <div class="bg-white rounded-[3rem] p-8 card-shadow border border-gray-100 text-left text-left">
+                    <h3 class="font-bold text-xl text-slate-900 tracking-tight mb-8 text-left">Ride Details</h3>
+                    <div class="space-y-5 text-left text-left">
+                        <div class="relative group"><i data-lucide="user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-yellow-600 text-left text-left text-left text-left"></i><input type="text" id="cust-name" placeholder="Full Name" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left text-left"></div>
+                        <div class="relative group text-left text-left text-left text-left"><i data-lucide="map-pin" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500 text-left text-left text-left text-left"></i><input type="text" id="pickup-loc" placeholder="Pickup Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left text-left"></div>
+                        <div class="relative group text-left text-left text-left text-left text-left"><i data-lucide="navigation" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500 text-left text-left text-left text-left text-left text-left"></i><input type="text" id="drop-loc" placeholder="Drop Location" class="form-input w-full pl-14 pr-6 py-5 rounded-[1.5rem] outline-none font-semibold text-sm text-left text-left"></div>
                         <div class="grid grid-cols-2 gap-4">
-                            <input type="date" id="ride-date" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold">
-                            <input type="time" id="ride-time" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold">
+                            <input type="date" id="ride-date" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold text-left text-left text-left">
+                            <input type="time" id="ride-time" class="form-input w-full px-5 py-5 rounded-[1.5rem] outline-none text-xs font-bold text-left text-left text-left text-left">
                         </div>
-                        <button onclick="submitToWhatsApp()" class="group w-full bg-yellow-brand text-black py-5 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 shadow-2xl mt-4 text-center">
-                            <i data-lucide="message-circle" class="w-6 h-6 fill-green-500 text-green-500"></i>
+                        <button onclick="submitToWhatsApp()" class="group w-full bg-yellow-brand text-black py-5 rounded-[2rem] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 shadow-2xl mt-4 text-center text-center">
+                            <i data-lucide="message-circle" class="w-6 h-6 fill-green-500 text-green-500 text-left text-left text-left text-left text-left"></i>
                             Book via WhatsApp
                         </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AUTHENTIC TESTIMONIALS -->
+            <section class="mt-12 px-2 pb-20 text-left text-left">
+                <div class="flex justify-between items-end mb-5 text-left text-left text-left">
+                    <h3 class="font-bold text-xl text-slate-900 tracking-tight text-left text-left">Real Guest Reviews</h3>
+                    <div class="flex gap-1 text-yellow-brand mb-1 text-left text-left text-left text-left text-left"><i data-lucide="star" class="w-4 h-4 fill-current text-left text-left"></i><span class="text-xs font-black text-slate-900 text-left text-left">4.9/5</span></div>
+                </div>
+                <div class="flex overflow-x-auto gap-4 no-scrollbar pb-6 text-left">
+                    <div class="min-w-[300px] bg-white p-6 rounded-[2.5rem] border border-gray-100 card-shadow text-left">
+                        <div class="flex gap-0.5 mb-3 text-yellow-brand text-left text-left"><i data-lucide="star" class="w-3 h-3 fill-current text-left"></i><i data-lucide="star" class="w-3 h-3 fill-current text-left"></i><i data-lucide="star" class="w-3 h-3 fill-current text-left"></i><i data-lucide="star" class="w-3 h-3 fill-current text-left text-left"></i><i data-lucide="star" class="w-3 h-3 fill-current text-left text-left"></i></div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4 italic text-left text-left">"I have never seen a friendlier host like Shiwath. This guy knows in and out of Darjeeling and will surely give you a good time. He even goes to the extent of optimizing your itinerary himself!"</p>
+                        <div class="flex items-center gap-3 text-left text-left text-left text-left">
+                            <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-[10px] font-bold">SK</div>
+                            <div class="text-left text-left text-left text-left"><p class="text-[10px] font-black text-slate-900 uppercase">Soumya Kanti Roy</p><p class="text-[8px] text-slate-400 text-left text-left text-left text-left text-left">Local Guide</p></div>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
         <!-- ABOUT PAGE -->
-        <div id="page-about" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6">About Us</h2>
-            <div class="space-y-6 pb-20">
-                <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-gray-50">
-                    <h3 class="font-bold text-lg text-slate-900 mb-3">Our Mission</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed">
-                        At <span class="font-bold text-yellow-brand">Darjeelingtaxi service</span>, we provide safe and transparent travel across the Himalayas. Verified drivers and fair pricing are our top priorities.
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 gap-4">
-                    <div class="bg-white p-6 rounded-[2rem] border border-gray-100 flex items-start gap-4">
-                        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-                        <div><h4 class="font-bold text-slate-800 text-sm">Local Experts</h4><p class="text-[11px] text-slate-400 mt-1">Our drivers know every corner of the hill terrain.</p></div>
-                    </div>
+        <div id="page-about" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left text-left text-left text-left">
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left">About Us</h2>
+            <div class="space-y-6 pb-20 text-left text-left text-left">
+                <div class="bg-white p-8 rounded-[2.5rem] card-shadow border border-gray-50 text-left text-left text-left">
+                    <h3 class="font-bold text-lg text-slate-900 mb-3 text-left text-left text-left">Our Mission</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed text-left text-left">Providing safe, transparent, and expert travel across the Darjeeling and Sikkim Himalayas. We focus on vehicle quality and local driver training.</p>
+                    <a href="https://maps.app.goo.gl/VGrfDdzLziDBUyLP9" target="_blank" class="mt-6 inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-3 rounded-xl text-xs font-bold tap-scale text-left text-left text-left">
+                        <i data-lucide="navigation" class="w-4 h-4 text-left text-left"></i> Locate our Office
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- LIST PAGES (Tours, Pickup, Hyperlocal) -->
-        <div id="page-tours" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6">Sightseeing</h2>
-            <div id="sightseeing-container" class="grid grid-cols-1 gap-6 pb-20"></div>
+        <!-- LIST PAGES -->
+        <div id="page-tours" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left text-left text-left text-left text-left">
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left text-left">Sightseeing Routes</h2>
+            <div id="sightseeing-container" class="grid grid-cols-1 gap-6 pb-20 text-left text-left text-left"></div>
         </div>
 
-        <div id="page-pickup" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6">Transfers</h2>
-            <div id="transfers-container" class="grid grid-cols-2 gap-4 pb-20 text-left"></div>
+        <div id="page-pickup" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left text-left text-left text-left text-left">
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left text-left text-left text-left">Transfers</h2>
+            <div id="transfers-container" class="grid grid-cols-2 gap-4 pb-20 text-left text-left text-left text-left"></div>
         </div>
 
-        <div id="page-hyperlocal" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left">Hyperlocal Runs</h2>
-            <div id="hyperlocal-container" class="space-y-4 pb-20"></div>
+        <div id="page-hyperlocal" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left text-left text-left text-left text-left">
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-6 text-left text-left text-left text-left text-left">Hyperlocal Runs</h2>
+            <div id="hyperlocal-container" class="space-y-4 pb-20 text-left text-left text-left text-left text-left"></div>
         </div>
 
-        <!-- HELP & SUPPORT PAGE -->
-        <div id="page-help" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left">
-            <div class="flex justify-between items-center mb-8 px-2 text-left">
-                <div><h2 class="text-2xl font-black text-slate-900 tracking-tight">Help & Support</h2><p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">24/7 Assistance</p></div>
-                <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center shadow-lg text-white"><i data-lucide="headphones" class="w-6 h-6"></i></div>
-            </div>
-            <div class="space-y-4 pb-20">
-                <a href="tel:918207219672" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale block">
-                    <div class="w-14 h-14 bg-yellow-brand rounded-2xl flex items-center justify-center text-black shadow-md"><i data-lucide="phone-call" class="w-8 h-8"></i></div>
-                    <div class="text-left"><h3 class="font-bold text-slate-800">Direct Call</h3><p class="text-sm font-black text-slate-900">+91 82072 19672</p></div>
+        <!-- HELP & SUPPORT -->
+        <div id="page-help" class="page-hidden page-content px-4 pt-6 min-h-[70vh] text-left text-left text-left text-left text-left">
+            <h2 class="text-2xl font-black text-slate-900 px-2 mb-8 text-left text-left text-left">Help & Support</h2>
+            <div class="space-y-4 pb-20 text-left text-left text-left text-left">
+                <a href="tel:918207219672" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale block text-left text-left text-left text-left">
+                    <div class="w-14 h-14 bg-yellow-brand rounded-2xl flex items-center justify-center text-black shadow-md text-black text-black text-black text-black"><i data-lucide="phone-call" class="w-8 h-8 text-black text-black text-black text-black text-black text-black"></i></div>
+                    <div class="text-left text-left text-left text-left text-left text-left"><h3 class="font-bold text-slate-800 text-left text-left text-left text-left text-left text-left">Direct Call</h3><p class="text-sm font-black text-slate-900 text-left text-left text-left text-left text-left text-left text-left">+91 82072 19672</p></div>
+                </a>
+                <a href="https://maps.app.goo.gl/VGrfDdzLziDBUyLP9" target="_blank" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale block text-left text-left text-left text-left text-left">
+                    <div class="w-14 h-14 bg-blue-500 rounded-2xl flex items-center justify-center text-white shadow-md text-white text-white text-white text-white text-white text-white text-white text-white"><i data-lucide="map-pin" class="w-8 h-8 text-white text-white text-white text-white text-white text-white text-white"></i></div>
+                    <div class="text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left"><h3 class="font-bold text-slate-800 text-left text-left text-left text-left text-left text-left text-left text-left">Find Us</h3><p class="text-xs font-bold text-slate-400 uppercase text-left text-left text-left text-left text-left text-left text-left text-left">Open Google Maps</p></div>
                 </a>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 text-slate-400 py-16 px-6 text-center border-t border-white/5 mt-12 text-left">
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="text-2xl font-bold font-serif text-white mb-2 uppercase tracking-tight">Darjeeling taxi service</div>
-            <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-6">Safe. Reliable. Everywhere.</p>
-            <div class="mb-8"><p class="text-[10px] uppercase font-black text-slate-600 tracking-widest mb-1">Udyam Registration</p><p class="text-xs text-yellow-brand font-bold">UDYAM-WB-06-0038303</p></div>
-            <p class="text-[9px] uppercase tracking-[0.2em] text-slate-700 font-bold">© 2026 DARJEELINGTAXI SERVICE.</p>
+    <footer class="bg-slate-950 text-slate-400 py-16 px-6 text-center border-t border-white/5 mt-12 text-left text-left text-left text-left text-left text-left">
+        <div class="max-w-7xl mx-auto text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">
+            <div class="text-2xl font-bold font-serif text-white mb-2 uppercase tracking-tight text-center text-center text-center text-center text-center">Darjeeling taxi service</div>
+            <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-6 text-center text-center text-center text-center text-center text-center">Safe. Reliable. Everywhere.</p>
+            
+            <div class="mb-8 flex flex-col items-center gap-2">
+                <p class="text-[10px] uppercase font-black text-slate-600 tracking-widest text-center">Udyam Registration</p>
+                <p class="text-xs text-yellow-brand font-bold text-center text-center text-center">UDYAM-WB-06-0038303</p>
+                <a href="https://maps.app.goo.gl/VGrfDdzLziDBUyLP9" target="_blank" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition mt-2 text-center text-center text-center">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-white text-center text-center"></i>
+                </a>
+            </div>
+
+            <div class="mb-8 border-t border-white/5 pt-8">
+                <p class="text-[10px] uppercase font-bold text-slate-600 tracking-[0.2em] text-center">Powered by <span class="text-yellow-brand text-center text-center">Darjeelinghost</span></p>
+            </div>
+
+            <p class="text-[9px] uppercase tracking-[0.2em] text-slate-700 font-bold text-center text-center text-center">© 2026 DARJEELINGTAXI SERVICE.</p>
         </div>
     </footer>
 
     <!-- Tab Bar -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-gray-100 px-4 py-4 flex justify-between items-center lg:hidden z-50 text-center">
-        <button onclick="switchPage('home')" id="nav-home" class="flex-1 flex flex-col items-center text-yellow-brand tap-scale"><i data-lucide="home" class="w-5 h-5"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Home</span></button>
-        <button onclick="switchPage('tours')" id="nav-tours" class="flex-1 flex flex-col items-center text-slate-300 tap-scale"><i data-lucide="map" class="w-5 h-5"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Tours</span></button>
-        <button onclick="switchPage('pickup')" id="nav-pickup" class="flex-1 flex flex-col items-center text-slate-300 tap-scale"><i data-lucide="plane-takeoff" class="w-5 h-5"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Pickup</span></button>
-        <button onclick="switchPage('help')" id="nav-help" class="flex-1 flex flex-col items-center text-slate-300 tap-scale"><i data-lucide="help-circle" class="w-5 h-5"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Help</span></button>
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-gray-100 px-4 py-4 flex justify-between items-center lg:hidden z-50 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center">
+        <button onclick="switchPage('home')" id="nav-home" class="flex-1 flex flex-col items-center text-yellow-brand tap-scale text-center text-center text-center text-center text-center text-center text-center text-center"><i data-lucide="home" class="w-5 h-5 text-center text-center text-center text-center text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center text-center text-center text-center">Home</span></button>
+        <button onclick="switchPage('tours')" id="nav-tours" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center text-center text-center text-center text-center text-center text-center text-center"><i data-lucide="map" class="w-5 h-5 text-center text-center text-center text-center text-center text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center text-center text-center text-center">Tours</span></button>
+        <button onclick="switchPage('pickup')" id="nav-pickup" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><i data-lucide="plane-takeoff" class="w-5 h-5 text-center text-center text-center text-center text-center text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center text-center text-center text-center">Pickup</span></button>
+        <button onclick="switchPage('help')" id="nav-help" class="flex-1 flex flex-col items-center text-slate-300 tap-scale text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"><i data-lucide="help-circle" class="w-5 h-5 text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center text-center"></i><span class="text-[8px] mt-1 font-black uppercase tracking-tighter text-center text-center text-center text-center text-center">Help</span></button>
     </div>
 
     <script>
+        // --- HERO CAROUSEL ---
+        let currentSlideIdx = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        function setSlide(index) {
+            if(!slides[index]) return;
+            slides[currentSlideIdx].classList.remove('active');
+            dots[currentSlideIdx].classList.replace('w-8', 'w-2');
+            dots[currentSlideIdx].classList.replace('bg-white', 'bg-white/40');
+            currentSlideIdx = index;
+            slides[currentSlideIdx].classList.add('active');
+            dots[currentSlideIdx].classList.replace('w-2', 'w-8');
+            dots[currentSlideIdx].classList.replace('bg-white/40', 'bg-white');
+        }
+        setInterval(() => { setSlide((currentSlideIdx + 1) % slides.length); }, 5000);
+
         // --- PWA LOGIC ---
         let deferredPrompt;
-        const installBtn = document.getElementById('pwa-install-btn');
+        const overlay = document.getElementById('pwa-overlay');
+        const modal = document.getElementById('pwa-modal');
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            // Show the install button in the sidebar
-            if(installBtn) installBtn.classList.remove('hidden');
+            // Always show modal when ready in this aggressive version
+            showPWAModal();
         });
 
+        function showPWAModal() {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+                document.getElementById('android-install-ui').classList.add('hidden');
+                document.getElementById('ios-install-ui').classList.remove('hidden');
+                document.getElementById('pwa-desc').innerText = "Add us to your iPhone home screen for the full app experience.";
+            }
+            overlay.classList.remove('hidden');
+            setTimeout(() => { overlay.classList.add('opacity-100'); modal.classList.add('active'); }, 50);
+        }
+
+        function dismissPWAModal() {
+            overlay.classList.remove('opacity-100');
+            modal.classList.remove('active');
+            setTimeout(() => { overlay.classList.add('hidden'); }, 500);
+        }
+
         async function triggerPWAInstall() {
-            if (!deferredPrompt) return;
+            if (!deferredPrompt) {
+                showToast("Already installed or not supported.");
+                return dismissPWAModal();
+            }
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                if(installBtn) installBtn.classList.add('hidden');
-            }
             deferredPrompt = null;
+            dismissPWAModal();
         }
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                const swCode = `
-                    const CACHE_NAME = 'taxi-v2';
-                    self.addEventListener('install', e => {
-                        self.skipWaiting();
-                    });
-                    self.addEventListener('activate', e => {
-                        e.waitUntil(clients.claim());
-                    });
-                    self.addEventListener('fetch', e => {
-                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-                    });
-                `;
+                const swCode = `const CACHE_NAME = 'v9'; self.addEventListener('install', e => self.skipWaiting()); self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));`;
                 const blob = new Blob([swCode], { type: 'application/javascript' });
                 navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(err => console.log('SW failed', err));
             });
+        }
+
+        // --- NATIVE SHARE ---
+        function shareApp() {
+            if (navigator.share) {
+                navigator.share({ title: 'Darjeelingtaxi Service', text: 'Book safe taxi rides in Darjeeling!', url: window.location.href }).catch(console.error);
+            } else {
+                showToast("Link copied to clipboard!");
+                const el = document.createElement('textarea'); el.value = window.location.href; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            }
         }
 
         // --- APP LOGIC ---
@@ -417,15 +572,12 @@
 
         function submitToWhatsApp() {
             const name = document.getElementById('cust-name').value;
-            const pax = document.getElementById('num-pax').value;
             const pickup = document.getElementById('pickup-loc').value;
             const drop = document.getElementById('drop-loc').value;
             const date = document.getElementById('ride-date').value;
             const time = document.getElementById('ride-time').value;
-
             if (!name || !pickup || !drop) { showToast("Please fill all details!", "error"); return; }
-
-            const msg = `*NEW TAXI BOOKING REQUEST*\n--------------------------\n👤 Name: ${name}\n👥 Persons: ${pax}\n📍 Pickup: ${pickup}\n🏁 Drop: ${drop}\n📅 Date: ${date}\n🕒 Time: ${time}\n--------------------------\nHello, I would like to book a ride. Please confirm rates.`;
+            const msg = `*NEW TAXI BOOKING REQUEST*\n--------------------------\n👤 Name: ${name}\n📍 Pickup: ${pickup}\n🏁 Drop: ${drop}\n📅 Date: ${date}\n🕒 Time: ${time}\n--------------------------\nHello, I would like to book a ride. Please confirm rates.`;
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -453,31 +605,9 @@
                 { name: 'Grocery Store', dest: 'Market', icon: 'shopping-cart', bg: 'bg-emerald-50', text: 'text-emerald-600' },
                 { name: 'Restaurant Drop', dest: 'Cafe', icon: 'utensils', bg: 'bg-pink-50', text: 'text-pink-600' }
             ];
-
-            document.getElementById('sightseeing-container').innerHTML = sightseeing.map(s => `
-                <div onclick="bookService('${s.name}', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow tap-scale cursor-pointer bg-slate-200">
-                    <img src="${s.img}" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <div class="text-left"><span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-yellow-600 mb-1 inline-block">${s.sub}</span><h3 class="text-white text-xl font-bold">${s.name}</h3></div>
-                        <div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg"><i data-lucide="arrow-right" class="w-5 h-5"></i></div>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('transfers-container').innerHTML = transfers.map(t => `
-                <div onclick="bookService('${t.name}', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer text-blue-600">
-                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600"><i data-lucide="${t.icon}" class="w-8 h-8"></i></div>
-                    <h3 class="font-bold text-sm text-slate-800">${t.name}</h3>
-                </div>
-            `).join('');
-
-            document.getElementById('hyperlocal-container').innerHTML = locals.map(l => `
-                <div onclick="bookService('${l.dest}', 'Current Location')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group cursor-pointer text-left">
-                    <div class="w-14 h-14 ${l.bg} rounded-2xl flex items-center justify-center ${l.text}"><i data-lucide="${l.icon}" class="w-8 h-8"></i></div>
-                    <div class="text-left text-left"><h3 class="font-bold text-slate-800">${l.name}</h3><p class="text-[10px] text-slate-400 uppercase font-bold">Town Transfer</p></div>
-                </div>
-            `).join('');
+            document.getElementById('sightseeing-container').innerHTML = sightseeing.map(s => `<div onclick="bookService('${s.name}', 'Darjeeling Town')" class="relative h-48 rounded-[2.5rem] overflow-hidden card-shadow tap-scale cursor-pointer bg-slate-200"><img src="${s.img}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div><div class="absolute bottom-6 left-6 right-6 flex justify-between items-end"><div class="text-left"><span class="glass-pill px-3 py-1 rounded-full text-[9px] font-black uppercase text-yellow-600 mb-1 inline-block">${s.sub}</span><h3 class="text-white text-xl font-bold">${s.name}</h3></div><div class="w-10 h-10 bg-yellow-brand rounded-full flex items-center justify-center text-black shadow-lg"><i data-lucide="arrow-right" class="w-5 h-5"></i></div></div></div>`).join('');
+            document.getElementById('transfers-container').innerHTML = transfers.map(t => `<div onclick="bookService('${t.name}', 'Darjeeling Town')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex flex-col items-center text-center gap-3 tap-scale group transition-all cursor-pointer text-blue-600"><div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600"><i data-lucide="${t.icon}" class="w-8 h-8"></i></div><h3 class="font-bold text-sm text-slate-800">${t.name}</h3></div>`).join('');
+            document.getElementById('hyperlocal-container').innerHTML = locals.map(l => `<div onclick="bookService('${l.dest}', 'Current Location')" class="bg-white p-6 rounded-[2rem] card-shadow border border-gray-50 flex items-center gap-5 tap-scale group cursor-pointer text-left"><div class="w-14 h-14 ${l.bg} rounded-2xl flex items-center justify-center ${l.text} text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left"><i data-lucide="${l.icon}" class="w-8 h-8 text-left text-left text-left"></i></div><div class="text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left"><h3 class="font-bold text-slate-800">${l.name}</h3><p class="text-[10px] text-slate-400 uppercase font-bold text-left">Town Transfer</p></div></div>`).join('');
             lucide.createIcons();
         };
 
@@ -492,4 +622,3 @@
     </script>
 </body>
 </html>
-
